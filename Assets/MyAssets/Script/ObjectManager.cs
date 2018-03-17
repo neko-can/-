@@ -11,21 +11,17 @@ public class ObjectManager : MonoBehaviour {
     public List<GameObject> wallList;
     int noObjects;
 
-    GameObject targetObject;
     GameObject cloneTarget;
 
-    OnClickClass onClickClass;
+    int i;
 
 	// Use this for initialization
 	void Start () {
 
         noObjects = wallList.Count;
-        for (int i=0; i<noObjects; i++)
+        for (i=0; i<noObjects; i++)
         {
-            targetObject = wallList[i];
-
-            onClickClass = new OnClickClass(wallList[i], WallsParent);
-            buttonList[i].GetComponent<Button>().onClick.AddListener(OnClickClass.OnClick);
+            buttonList[i].GetComponent<Button>().onClick.AddListener(OnClick);
         }
 	}
 	
@@ -34,22 +30,10 @@ public class ObjectManager : MonoBehaviour {
 		
 	}
 
-}
-
-public class OnClickClass : MonoBehaviour
-{
-    GameObject targetObject;
-    GameObject cloneTarget;
-    GameObject WallsParent;
-
-    public OnClickClass(GameObject targetObj, GameObject wallParent)
+    public void OnClick()
     {
-        targetObject = targetObj;
-        WallsParent = wallParent;
+        Debug.Log(i);
+        cloneTarget = GameObject.Instantiate(wallList[i], WallsParent.transform);
     }
 
-    public static void OnClick()
-    {
-        cloneTarget = GameObject.Instantiate(targetObject, WallsParent.transform);
-    }
 }
