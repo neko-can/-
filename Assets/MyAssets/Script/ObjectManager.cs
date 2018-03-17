@@ -7,6 +7,7 @@ public class ObjectManager : MonoBehaviour {
 
     public GameObject WallsParent;
     public GameObject floor;
+    public GameObject selectableZone;
 
     public List<GameObject> buttonList;
     public List<GameObject> wallList;
@@ -15,6 +16,9 @@ public class ObjectManager : MonoBehaviour {
 
     Mesh floorMesh;
     Renderer floorRenderer;
+    Vector3 startPos;
+    Vector3 floorBoundsSize;
+    Vector3 floorCenter;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +30,6 @@ public class ObjectManager : MonoBehaviour {
             buttonList[i].GetComponent<Button>().onClick.AddListener(() => OnClick(ii));
         }
 
-        makeSelectableZone();
 	}
 	
 	// Update is called once per frame
@@ -43,12 +46,17 @@ public class ObjectManager : MonoBehaviour {
     {
         //floorのサイズは正規化されているものとする。
         floorRenderer = floor.GetComponent<Renderer>();
+        floorBoundsSize = floorRenderer.bounds.size;
+        floorCenter = floorRenderer.bounds.center;
+
+        startPos = new Vector3(-floorBoundsSize.x / 2, 0, -floorBoundsSize.z / 2);
 
     }
 
     void testBounds()
     {
         floorMesh = floor.GetComponent<MeshFilter>().mesh;
+        floorRenderer = floor.GetComponent<Renderer>();
 
         Debug.Log("vertices : " + floorMesh.vertices[0].ToString());
         Debug.Log("bounds.size : " + floorMesh.bounds.size.ToString());
