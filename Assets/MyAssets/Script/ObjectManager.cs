@@ -9,7 +9,7 @@ public class ObjectManager : MonoBehaviour {
     public GameObject floor;
     public GameObject selectableZone;
     public GameObject selectableZoneParent;
-    public GameObject targetController; //ボタンの親
+    GameObject targetController; //ボタンの親
 
     //UIで補助
     public List<GameObject> buttonList;
@@ -54,6 +54,8 @@ public class ObjectManager : MonoBehaviour {
 
     void setControllerButton()
     {
+        targetController = GameObject.Find("Prefabs/UI/targetControllerCanvas");
+
         upButton = targetController.transform.Find("upButton").gameObject;
         leftButton = targetController.transform.Find("leftButton").gameObject;
         rightButton = targetController.transform.Find("rightButton").gameObject;
@@ -63,6 +65,11 @@ public class ObjectManager : MonoBehaviour {
         leftButton.GetComponent<Button>().onClick.AddListener(leftOnClick);
         upButton.GetComponent<Button>().onClick.AddListener(upOnClick);
         downButton.GetComponent<Button>().onClick.AddListener(downOnClick);
+
+        if (targetObject != null)
+        {
+            GameObject.Instantiate(targetController, targetObject.transform);
+        }
         
     }
 
@@ -107,7 +114,6 @@ public class ObjectManager : MonoBehaviour {
 
         targetObject = cloneTarget;
         posIndex = 0;
-        editerPanel.GetComponent<Animator>().SetTrigger("selected");
     }
 
     void setSelectableZonesPos()
