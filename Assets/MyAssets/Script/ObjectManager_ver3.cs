@@ -1,17 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using unityHelper;
 
 public delegate void PhaseDelegate();
 public class ObjectManager_ver3 : MonoBehaviour {
 
+    public GameObject mapInScene;
+    public static GameObject MapInScene;
+
     public static PhaseDelegate phaseDelegate;
     public static SelectObjectPhase SelectObject = new SelectObjectPhase();
-    EditMapPhase EditMap = new EditMapPhase();
+    public static EditMapPhase EditMap = new EditMapPhase();
+
+    public static getChild GetChild = new getChild();
 
 	// Use this for initialization
 	void Start () {
         phaseDelegate = new PhaseDelegate(SelectObject.Main);
+        MapInScene = mapInScene;
 
         SelectObject.MyStart();
         EditMap.MyStart();
@@ -25,8 +32,12 @@ public class ObjectManager_ver3 : MonoBehaviour {
 
 public class SelectObjectPhase : PhaseClass
 {
+    List<GameObject> WallsPrefabs = new List<GameObject>();
+
     public override void MyStart()
     {
+        ObjectManager_ver3.GetChild.getChildObject(GameObject.Find("/Prefabs/Walls").transform, ref WallsPrefabs);
+        Debug.Log(WallsPrefabs.Count);
     }
 
     public override void OnChanged()
@@ -41,8 +52,12 @@ public class SelectObjectPhase : PhaseClass
 
 public class EditMapPhase : PhaseClass
 {
+
+    List<Vector3> selectableZonesPos = new List<Vector3>();
+
     public override void MyStart()
     {
+        Debug.Log(ObjectManager_ver3.MapInScene.name);
     }
 
     public override void OnChanged()
