@@ -36,17 +36,19 @@ public class SelectObjectPhase : PhaseClass
 
     public override void MyStart()
     {
-        ObjectManager_ver3.GetChild.getChildObject(GameObject.Find("/Prefabs/Walls").transform, ref WallsPrefabs);
-        Debug.Log(WallsPrefabs.Count);
+        ObjectManager_ver3.GetChild.getChildObject(GameObject.Find("/Prefabs/Walls").transform, ref WallsPrefabs); //Prefab情報取得
     }
 
     public override void OnChanged()
     {
+        Debug.Log("selectOnChanged");
     }
 
     public override void MyUpdate()
     {
-        ObjectManager_ver3.phaseDelegate = new PhaseDelegate(ObjectManager_ver3.SelectObject.Main);
+        Debug.Log("selectUpdate");
+        ObjectManager_ver3.phaseDelegate = new PhaseDelegate(ObjectManager_ver3.EditMap.Main);
+
     }
 }
 
@@ -54,14 +56,17 @@ public class EditMapPhase : PhaseClass
 {
 
     List<Vector3> selectableZonesPos = new List<Vector3>();
+    GameObject selectableZone = GameObject.Find("Prefabs/forEditMap/selectableZone");
 
     public override void MyStart()
     {
         Debug.Log(ObjectManager_ver3.MapInScene.name);
+        Debug.Log(selectableZone.name);
     }
 
     public override void OnChanged()
     {
+        Debug.Log("editOnChanged");
     }
 
     public override void MyUpdate()
