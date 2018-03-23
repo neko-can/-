@@ -73,14 +73,15 @@ public class ScrollContent : MonoBehaviour {
 
             //関数付与
             int ii = i + 0;
-            ListButtonClone.GetComponent<Button>().onClick.AddListener(() => OnClick(ii));
-            //ListButtonClone.transform.Find("Text").gameObject.GetComponent<Text>().text = 
+            ListButtonClone.GetComponent<Button>().onClick.AddListener(() => OnClick(WallPrefabs[ii]));
+            ListButtonClone.transform.Find("Text").GetComponent<Text>().text = WallPrefabs[ii].name;
         }
     }
 
-    void OnClick(int i)
+    void OnClick(GameObject targetClone)
     {
-        ObjectManager_ver3.target = GameObject.Instantiate(WallPrefabs[i], WallParent.transform);
+        ObjectManager_ver3.target = GameObject.Instantiate(targetClone, WallParent.transform);
+        ObjectManager_ver3.target.SetActive(true);
     }
 
     public void Main()
