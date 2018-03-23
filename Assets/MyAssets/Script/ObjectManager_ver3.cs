@@ -16,14 +16,18 @@ public class ObjectManager_ver3 : MonoBehaviour {
 
     //helper
     public static getChild GetChild = new getChild();
+    public static GameObject ownGameObject;
 
+    //EditMapPhase用変数
     //座標操作
     public static int posIndexStatic = 0;
+    public static GameObject target;
 
 	// Use this for initialization
 	void Start () {
         phaseDelegate = new PhaseDelegate(SelectObject.Main);
         MapInScene = mapInScene;
+        ownGameObject = gameObject;
 
         SelectObject.MyStart();
         EditMap.MyStart();
@@ -37,21 +41,15 @@ public class ObjectManager_ver3 : MonoBehaviour {
 
 public class SelectObjectPhase : PhaseClass
 {
-    List<GameObject> WallsPrefabs = new List<GameObject>();
-    List<GameObject> buttonList = new List<GameObject>();
-    int noObjects;
-    GameObject ListButton;
-    GameObject ListButtonClone;
-    GameObject ScrollContent;
-    int listButtonSize = 150;
-    int noColumn = 3;
-    Vector2 buttonPos;
+
+    //ボタン自動生成
+    ScrollContent scrollContent;
 
     public override void MyStart()
     {
-        ObjectManager_ver3.GetChild.getChildObject(GameObject.Find("/Prefabs/Walls").transform, ref WallsPrefabs); //Prefab情報取得
-        ListButton = GameObject.Find("Prefabs/UI/ObjectButton");
-        ListButton.GetComponent<RectTransform>().sizeDelta = new Vector2(listButtonSize, listButtonSize);
+        //ボタン自動生成
+        scrollContent = ObjectManager_ver3.ownGameObject.GetComponent<ScrollContent>();
+        scrollContent.MyStart();
     }
 
     public override void OnChanged()
@@ -63,18 +61,6 @@ public class SelectObjectPhase : PhaseClass
     {
         ObjectManager_ver3.phaseDelegate = new PhaseDelegate(ObjectManager_ver3.EditMap.Main);
 
-    }
-
-    void setListButton()
-    {
-        //ボタン自動生成
-
-        noObjects = WallsPrefabs.Count;
-        for (int i = 0; i < noObjects; i++)
-        {
-            int ii = i + 0; //一時変数
-            ListButton.GetComponent<Button>().onClick.AddListener(() => OnClick(ii));
-        }
     }
 
     public void OnClick(int i)

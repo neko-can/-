@@ -19,7 +19,7 @@ namespace unityHelper
 {
     public class getChild
     {
-        public void getChildObject(Transform parentTransform, ref List<GameObject> container)
+        public static void getChildObject(Transform parentTransform, ref List<GameObject> container)
         {
             foreach (Transform i in parentTransform)
             {
@@ -30,7 +30,7 @@ namespace unityHelper
 
     }
 
-    public abstract class PhaseClass
+    public abstract class PhaseClass : MonoBehaviour
     {
         public abstract void MyStart();
         public abstract void OnChanged();
