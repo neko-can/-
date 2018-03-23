@@ -29,4 +29,33 @@ namespace unityHelper
         }
 
     }
+
+    public abstract class PhaseClass
+    {
+        public abstract void MyStart();
+        public abstract void OnChanged();
+        public abstract void MyUpdate();
+
+        protected int phase = 0;
+        public void Main()
+        {
+            switch (phase)
+            {
+                case 0:
+                    OnChangedMain();
+                    break;
+
+                default:
+                    MyUpdate();
+                    break;
+            }
+        }
+
+        void OnChangedMain()
+        {
+            OnChanged();
+            phase++;
+        }
+    }
+
 }
