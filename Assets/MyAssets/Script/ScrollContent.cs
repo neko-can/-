@@ -24,6 +24,9 @@ public class ScrollContent : MonoBehaviour {
     GameObject ListButtonClone;
     Vector2 buttonPosInit;
     Vector2 buttonPos;
+    GameObject targetClone;
+    //phase
+    ObjectManager_ver3 objectManager_Ver3;
     //Scene内用変数
     GameObject WallParent;
 
@@ -31,22 +34,14 @@ public class ScrollContent : MonoBehaviour {
     int buttonSize = 150;
     int noCulumn = 3;
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void MyStart()
     {
         //変数用意
-        getChild.getChildObject(GameObject.Find("/Prefabs/Walls").transform, ref WallPrefabs);
+        objectManager_Ver3 = GetComponent<ObjectManager_ver3>();
+        GetChild.getChildrenObject(GameObject.Find("/Prefabs/Walls").transform, ref WallPrefabs);
         noButton = WallPrefabs.Count;
         ListButton = GameObject.Find("Prefabs/UI/ObjectButton");
-        WallParent = ObjectManager_ver3.MapInScene.transform.Find("Walls").gameObject;
+        WallParent = objectManager_Ver3.MapInScene.transform.Find("Walls").gameObject;
 
         //ボタン生成
         MakeButton();
@@ -63,6 +58,7 @@ public class ScrollContent : MonoBehaviour {
         //個別機能
         for (int i=0; i<noButton; i++)
         {
+            //Button本体配置
             ListButtonClone = GameObject.Instantiate(ListButton, ButtonCenter.transform);
             ListButtonClone.SetActive(true);
 
@@ -71,22 +67,31 @@ public class ScrollContent : MonoBehaviour {
             //position設定
             ListButtonClone.GetComponent<RectTransform>().anchoredPosition = buttonPos;
 
-            //関数付与
+            //OnClick関数付与
             int ii = i + 0;
+            targetClone = WallPrefabs[ii];
             ListButtonClone.GetComponent<Button>().onClick.AddListener(() => OnClick(WallPrefabs[ii]));
-            ListButtonClone.transform.Find("Text").GetComponent<Text>().text = WallPrefabs[ii].name;
+            ListButtonClone.transform.Find("Text").GetComponent<Text>().text = targetClone.name;
         }
     }
 
-    void OnClick(GameObject targetClone)
+    public void OnClick(GameObject targetClone)
     {
-        ObjectManager_ver3.target = GameObject.Instantiate(targetClone, WallParent.transform);
-        ObjectManager_ver3.target.SetActive(true);
-    }
+        objectManager_Ver3.target = GameObject.Instantiate(targetClone, WallParent.transform);
+        objectManager_Ver3.target.SetActive(true);
+        objectManager_Ver3.target.transform.position = objectManager_Ver3.selectableZonesPos[objectManager_Ver3.posIndexStatic];
 
-    public void Main()
-    {
+        //Controller配置
+        if (objectManager_Ver3.targetControllerClone == null)//途中でデリートするから
+        {
+            objectManager_Ver3.targetControllerClone = GameObject.Instantiate(objectManager_Ver3.targetController);
+        }
+        objectManager_Ver3.targetControllerClone.transform.SetParent(objectManager_Ver3.target.transform);
+        objectManager_Ver3.targetControllerClone.transform.localPosition = new Vector3(0, 0.1f, 0);
+        objectManager_Ver3.targetControllerClone.SetActive(true);
 
+        //panel切り替え
+        objectManager_Ver3.panelManager.ToEditPhase();
     }
 
     void MyUpdate()
@@ -94,26 +99,4 @@ public class ScrollContent : MonoBehaviour {
 
     }
 
-}
-
-public class setContent : PhaseClass
-{
-    ScrollContent scrollContent = new ScrollContent();
-    List<GameObject> wallPrefabs = new List<GameObject>();
-    GameObject buttonObject;
-
-    public override void MyStart()
-    {
-        Debug.Log(scrollContent.ButtonCenter);
-    }
-
-    public override void OnChanged()
-    {
-        
-    }
-
-    public override void MyUpdate()
-    {
-        
-    }
 }
