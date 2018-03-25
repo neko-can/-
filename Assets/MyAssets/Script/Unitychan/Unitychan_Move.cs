@@ -27,6 +27,7 @@ public class Unitychan_Move : MonoBehaviour {
     public void MyUpdate()
     {
         //速度設定
+        //unitychan.transform.Translate(unitychan.transform.forward * Time.deltaTime * Unitychan_CNTRL.runningSpeed);
         unitychan.GetComponent<Rigidbody>().velocity = unitychan.transform.forward * Unitychan_CNTRL.runningSpeed;
         //向き設定
         unitychan_Forward.MyUpdate();

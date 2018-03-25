@@ -13,6 +13,5 @@ public class unitychan_Initializer : MonoBehaviour {
         Unitychan_CNTRL.unitychan = GameObject.Find("unitychan");
         Unitychan_CNTRL.unitychan_Anim = Unitychan_CNTRL.unitychan.GetComponent<Animator>();
         Unitychan_CNTRL.MainCamera = GameObject.Find("Player/Main Camera");
-        Unitychan_CNTRL.movePhase = new MovePhase(Unitychan_CNTRL.unitychan_Move.MyUpdate);
     }
 }

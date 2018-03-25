@@ -101,21 +101,28 @@ public class forPCSwipe : MonoBehaviour {
 
 }
 
-public class PCEnlargeClass : PhaseClass
+public class PCEnlargeClass
 {
     //必要な変数
+    PhaseClass phaseClass;
     Vector3 initDistanceVector = new Vector3();
     Vector3 nowDistanceVector = new Vector3();
     float initCameraDistance;
 
-    public override void MyStart()
+    public void MyStart()
     {
+        phaseClass = new PhaseClass(new OnChanged(OnChanged), new MyUpdate(MyUpdate));
+
         initCameraDistance = forPCSwipe.initCameraDistance;
         changeDistance(initCameraDistance);
     }
 
+    public void Main()
+    {
+        phaseClass.Main();
+    }
 
-    public override void MyUpdate()
+    public void MyUpdate()
     {
         if(Input.GetAxis("Mouse ScrollWheel") == 0f) //変数初期化
         {
@@ -129,7 +136,7 @@ public class PCEnlargeClass : PhaseClass
         }
     }
 
-    public override void OnChanged()
+    public void OnChanged()
     {
     }
 

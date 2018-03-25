@@ -752,6 +752,7 @@ GameObject:
   - component: {fileID: 1377179969}
   - component: {fileID: 1377179968}
   - component: {fileID: 1377179970}
+  - component: {fileID: 1377179971}
   m_Layer: 0
   m_Name: unitychan_CNTRL
   m_TagString: Untagged
@@ -783,9 +784,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edcf4c0ea9a34f4bb5218fe7265eb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitychan_Forward: {fileID: 0}
+  unitychan_Move: {fileID: 0}
   unitychan: {fileID: 1711153535}
   unitychan_Anim: {fileID: 0}
   MainCamera: {fileID: 0}
+  timeCount: 0
   runningSpeed: 6
 --- !u!114 &1377179968
 MonoBehaviour:
@@ -818,6 +822,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1e5547b696b87d479817c0e0d62a720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1377179971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1377179965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d795c9ed7d27754c8684a00cd41dded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1513586899

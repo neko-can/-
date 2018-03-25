@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using unityHelper;
 
 public class TurnPhase : MonoBehaviour {
 
@@ -8,18 +9,30 @@ public class TurnPhase : MonoBehaviour {
     /// ターンしているときの動作
     /// </summary>
 
+    //必要な変数
+    //script
     unitychan_CNTRL Unitychan_CNTRL;
+    //variable
+    private PhaseClass phaseClass;
 
-    void MyStart()
+    public void MyStart()
     {
         Unitychan_CNTRL = GetComponent<unitychan_CNTRL>();
+        phaseClass = new PhaseClass(new OnChanged(OnChanged), new MyUpdate(MyUpdate));
     }
+
+    public void Main()
+    {
+        phaseClass.Main();
+    }
+
     void MyUpdate()
     {
-
+        Unitychan_CNTRL.movePhase = new MovePhase(Unitychan_CNTRL.unitychan_Move.MyUpdate);
     }
     void OnChanged()
     {
-
+        Unitychan_CNTRL.unitychan_Anim.SetTrigger("TurnRight");
+        //速度＆向き変更
     }
 }

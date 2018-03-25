@@ -30,31 +30,33 @@ namespace unityHelper
 
     }
 
-    public abstract class PhaseClass : MonoBehaviour
+    public delegate void OnChanged();
+    public delegate void MyUpdate();
+    delegate void MainDelegate();
+    public class PhaseClass
     {
-        public abstract void MyStart();
-        public abstract void OnChanged();
-        public abstract void MyUpdate();
+        OnChanged onChanged;
+        MyUpdate myUpdate;
+        MainDelegate mainDelegate;
 
-        protected int phase = 0;
-        public void Main()
+        public PhaseClass(OnChanged onChangedDelegate, MyUpdate myUpdateDelegate)
         {
-            switch (phase)
-            {
-                case 0:
-                    OnChangedMain();
-                    break;
-
-                default:
-                    MyUpdate();
-                    break;
-            }
+            onChanged = onChangedDelegate;
+            myUpdate = myUpdateDelegate;
+            
+            mainDelegate = new MainDelegate(OnChangedFunc);
         }
 
-        void OnChangedMain()
+        //外部で実行するもの
+        public void Main()
         {
-            OnChanged();
-            phase++;
+            mainDelegate();
+        }
+
+        void OnChangedFunc()
+        {
+            onChanged();
+            mainDelegate = new MainDelegate(myUpdate);
         }
     }
 
