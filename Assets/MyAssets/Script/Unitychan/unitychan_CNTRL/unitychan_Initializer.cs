@@ -11,7 +11,10 @@ public class unitychan_Initializer : MonoBehaviour {
         //変数設定
         Unitychan_CNTRL = GetComponent<unitychan_CNTRL>();
         Unitychan_CNTRL.unitychan = GameObject.Find("unitychan");
-        Unitychan_CNTRL.unitychan_Anim = Unitychan_CNTRL.unitychan.GetComponent<Animator>();
         Unitychan_CNTRL.MainCamera = GameObject.Find("Player/Main Camera");
+        //Animator
+        Unitychan_CNTRL.unitychan_Anim = Unitychan_CNTRL.unitychan.GetComponent<Animator>();
+        Unitychan_CNTRL.RunStateInfo = Animator.StringToHash("Base Layer.Run");
+        Unitychan_CNTRL.JumpStateInfo = Animator.StringToHash("Base_Layer.Jump");
     }
 }
