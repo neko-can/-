@@ -13,14 +13,17 @@ public class unitychan_CNTRL : MonoBehaviour {
     //必要な変数
     //script
     unitychan_Initializer Unitychan_Initializer;
-    public Unitychan_forward unitychan_Forward;
-    public Unitychan_Move unitychan_Move;
+    [HideInInspector] public Unitychan_forward unitychan_Forward;
+    [HideInInspector] public Unitychan_Move unitychan_Move;
     JumpPhase jumpPhase;
     //variable
-    public GameObject unitychan;
-    public Animator unitychan_Anim;
-    public GameObject MainCamera;
-    public float timeCount;
+    [HideInInspector] public GameObject unitychan;
+    [HideInInspector] public Animator unitychan_Anim;
+    [HideInInspector] public GameObject MainCamera;
+    [HideInInspector] public float timeCount;
+    AnimatorStateInfo currentAnimInfo;
+    [HideInInspector] public int RunStateInfo;
+    [HideInInspector] public int JumpStateInfo;
     //phase
     public MovePhase movePhase;
 
@@ -43,18 +46,29 @@ public class unitychan_CNTRL : MonoBehaviour {
         jumpPhase.MyStart();
 
         //初期の動き
-        movePhase = new MovePhase(unitychan_Move.MyUpdate);
     }
 
     // Update is called once per frame
     void Update () {
-        movePhase();
 
-        //Phase遷移条件
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Animator制御 & OnChanged
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Jump();
+            unitychan_Anim.SetTrigger("Run");
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            unitychan_Anim.SetTrigger("Jump");
+        }
+
+        //Script制御
+        currentAnimInfo = unitychan_Anim.GetCurrentAnimatorStateInfo(0);
+        Debug.Log(currentAnimInfo.fullPathHash);
+        if (currentAnimInfo.fullPathHash == RunStateInfo)
+        {
+            unitychan_Move.MyUpdate();
+        }
+        
     }
 
     void Turn()
