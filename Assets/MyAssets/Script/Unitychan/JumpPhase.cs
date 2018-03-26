@@ -19,6 +19,7 @@ public class JumpPhase : MonoBehaviour {
         phaseClass.Main();
     }
 
+    //実質CNTRLの条件が満たされた時だけ実行される関数
     void MyUpdate()
     {
         Unitychan_CNTRL.unitychan_Anim.SetTrigger("Jump");
