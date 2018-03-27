@@ -49,6 +49,7 @@ public class JumpPhase : MonoBehaviour {
             unitychanVelocity += unitychan.transform.forward * firstVelocityF + new Vector3(0, firstVelocityY);
             unitychanRb.velocity = unitychanVelocity;
 
+<<<<<<< HEAD
             //unitychanRb.AddForce(new Vector3(0, 100, 0));
             IsOnJump = false;
         }
@@ -61,6 +62,10 @@ public class JumpPhase : MonoBehaviour {
         }
     }
     public void OnChanged()
+=======
+    //実質CNTRLの条件が満たされた時だけ実行される関数
+    void MyUpdate()
+>>>>>>> 77d5b9dd424332261e7b8f3226ad96e221beeefe
     {
     }
 
