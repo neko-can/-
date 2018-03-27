@@ -22,13 +22,16 @@ public class unitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public GameObject MainCamera;
     [HideInInspector] public float timeCount;
     AnimatorStateInfo currentAnimInfo;
-    [HideInInspector] public int RunStateInfo;
-    [HideInInspector] public int JumpStateInfo;
+    [HideInInspector] public int RunStateHash;
+    [HideInInspector] public int JumpStateHash;
+    int unitychanAnimHash;
+    int previousHash;
+    [HideInInspector] public float unitychanAnimTime;
     //phase
     public MovePhase movePhase;
 
     //parameters
-    public float runningSpeed = 6f;
+    public float runningSpeed = 13f;
     float stopTurnTime = 2f;
 
     // Use this for initialization
@@ -51,6 +54,8 @@ public class unitychan_CNTRL : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        //Debug.Log(Vector3.SignedAngle(unitychan.transform.forward, new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z), new Vector3(0, 1, 0)));
+
         //Animator制御 & OnChanged
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -62,13 +67,36 @@ public class unitychan_CNTRL : MonoBehaviour {
         }
 
         //Script制御
+        //変数用意
         currentAnimInfo = unitychan_Anim.GetCurrentAnimatorStateInfo(0);
-        Debug.Log(currentAnimInfo.fullPathHash);
-        if (currentAnimInfo.fullPathHash == RunStateInfo)
+        unitychanAnimHash = currentAnimInfo.fullPathHash;
+        unitychanAnimTime = currentAnimInfo.normalizedTime;
+        //MyUpdate()
+        if (unitychanAnimHash == RunStateHash)
         {
             unitychan_Move.MyUpdate();
         }
-        
+        else if(unitychanAnimHash == JumpStateHash)
+        {
+            jumpPhase.MyUpdate();
+
+        }
+
+        if(unitychanAnimHash != previousHash)
+        {
+            //OnEnd()
+            if(previousHash == JumpStateHash)
+            {
+                jumpPhase.OnEnd();
+            }
+            //OnChanged()
+            if(unitychanAnimHash == JumpStateHash)
+            {
+                jumpPhase.OnChanged();
+            }
+            previousHash = unitychanAnimHash;
+        }
+
     }
 
     void Turn()
@@ -77,6 +105,5 @@ public class unitychan_CNTRL : MonoBehaviour {
 
     void Jump()
     {
-        movePhase = new MovePhase(jumpPhase.MyMain);
     }
 }

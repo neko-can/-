@@ -10,11 +10,7 @@ public class Unitychan_Move : MonoBehaviour {
     Unitychan_forward unitychan_Forward;
     //variable
     Animator unitychan_Anim;
-    float baseSpeed = 6f;
     GameObject unitychan;
-
-    //parameter
-    float stopDuringTurn = 3f;
 
     public void MyStart()
     {
