@@ -34,17 +34,6 @@ public class JumpPhase : MonoBehaviour {
 
     public void MyUpdate()
     {
-        //jumpPos = unitychan.transform.position;
-        //if (Unitychan_CNTRL.unitychanAnimTime < maxHeightTime){
-        //    jumpPos.y += upSpeed * Time.deltaTime;
-        //    unitychan.transform.position = jumpPos;
-        //}
-        //if (maxHeightTime < Unitychan_CNTRL.unitychanAnimTime)
-        //{
-        //    jumpPos.y -= upSpeed * Time.deltaTime;
-        //    unitychan.transform.position = jumpPos;
-        //}
-
         //必要な変数
         unitychanAnimTime = Unitychan_CNTRL.unitychanAnimTime;
 

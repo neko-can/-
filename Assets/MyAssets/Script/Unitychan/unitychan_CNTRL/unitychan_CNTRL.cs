@@ -19,6 +19,8 @@ public class unitychan_CNTRL : MonoBehaviour {
     JumpPhase jumpPhase;
     [HideInInspector] public UnitychanCollider unitychanCollider;
     WallKickPhase wallKickPhase;
+    WaitPhase waitPhase;
+    RunPhase runPhase;
     //variable
     [HideInInspector] public GameObject unitychan;
     [HideInInspector] public Animator unitychan_Anim;
@@ -27,11 +29,12 @@ public class unitychan_CNTRL : MonoBehaviour {
     AnimatorStateInfo currentAnimInfo;
     [HideInInspector] public int RunStateHash;
     [HideInInspector] public int JumpStateHash;
-    [HideInInspector] public int LangingStateHash;
+    [HideInInspector] public int LandingStateHash;
+    [HideInInspector] public int WaitStateHash;
     int unitychanAnimHash;
     int previousHash;
     [HideInInspector] public float unitychanAnimTime;
-    KeyCode? downKeyCode;
+    [HideInInspector] public KeyCode? downKeyCode;
     //phase
     public MovePhase movePhase;
 
@@ -43,10 +46,10 @@ public class unitychan_CNTRL : MonoBehaviour {
     void Start () {
         //必要な変数
         Unitychan_Initializer = GetComponent<unitychan_Initializer>();
-        unitychan_Forward = GetComponent<Unitychan_forward>();
-        unitychan_Move = GetComponent<Unitychan_Move>();
         jumpPhase = GetComponent<JumpPhase>();
         wallKickPhase = GetComponent<WallKickPhase>();
+        waitPhase = GetComponent<WaitPhase>();
+        runPhase = GetComponent<RunPhase>();
 
         //処理
         Unitychan_Initializer.MyStart();
@@ -54,6 +57,8 @@ public class unitychan_CNTRL : MonoBehaviour {
         unitychan_Move.MyStart();
         jumpPhase.MyStart();
         wallKickPhase.MyStart();
+        waitPhase.MyStart();
+        runPhase.MyStart();
 
         //初期の動き
     }
@@ -65,19 +70,8 @@ public class unitychan_CNTRL : MonoBehaviour {
         unitychanAnimHash = currentAnimInfo.fullPathHash;
         unitychanAnimTime = currentAnimInfo.normalizedTime;
         downKeyCode = GetKeyDownCode.getKeyDownCode();
-
         //衝突判定
         unitychanCollider.MyUpdate();
-
-        //Animator制御(AnimatorのPhase遷移)
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            unitychan_Anim.SetTrigger("Run");
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            unitychan_Anim.SetTrigger("Jump");
-        }
 
         //Script制御(ScriptのPhase遷移)
         if (unitychanAnimHash != previousHash)
@@ -87,30 +81,56 @@ public class unitychan_CNTRL : MonoBehaviour {
             {
                 jumpPhase.OnEnd();
             }
+            else if(previousHash == LandingStateHash)
+            {
+
+            }
+            else if(previousHash == RunStateHash)
+            {
+
+            }
+            else if(previousHash == WaitStateHash)
+            {
+
+            }
+
             //OnChanged()
             if (unitychanAnimHash == JumpStateHash)
             {
                 jumpPhase.OnChanged();
             }
-            if (unitychanAnimHash == LangingStateHash)
+            else if (unitychanAnimHash == LandingStateHash)
             {
                 wallKickPhase.FirstJumpOnChanged();
             }
+            else if(previousHash == RunStateHash)
+            {
+
+            }
+            else if(previousHash == WaitStateHash)
+            {
+
+            }
+            //
             previousHash = unitychanAnimHash;
         }
+
         //MyUpdate()
-        if (unitychanAnimHash == RunStateHash)
-        {
-            unitychan_Move.MyUpdate();
-        }
-        else if(unitychanAnimHash == JumpStateHash)
+        if (unitychanAnimHash == JumpStateHash)
         {
             jumpPhase.MyUpdate();
-
         }
-        else if(unitychanAnimHash == LangingStateHash)
+        else if(unitychanAnimHash == LandingStateHash)
         {
             wallKickPhase.FirstJumpUpdate();
+        }
+        else if(unitychanAnimHash == RunStateHash)
+        {
+            runPhase.MyUpdate();
+        }
+        else if(unitychanAnimHash == WaitStateHash)
+        {
+            waitPhase.MyUpdate();
         }
 
 
