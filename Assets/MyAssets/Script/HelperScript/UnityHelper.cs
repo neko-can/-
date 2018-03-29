@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +29,31 @@ namespace unityHelper
             }
         }
 
+    }
+
+    public static class GetKeyDownCode
+    {
+        public static KeyCode? key = null;
+
+        public static KeyCode? getKeyDownCode()
+        {
+            if (Input.anyKeyDown)
+            {
+                foreach(KeyCode code in Enum.GetValues(typeof(KeyCode)))
+                {
+                    if (Input.GetKeyDown(code))
+                    {
+                        key = code;
+                    }
+                }
+            }
+            else
+            {
+                key = null;
+            }
+
+            return key;
+        }
     }
 
     public delegate void OnChanged();

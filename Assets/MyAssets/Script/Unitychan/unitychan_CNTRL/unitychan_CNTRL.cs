@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using unityHelper;
 
 public delegate void MovePhase();
 public class unitychan_CNTRL : MonoBehaviour {
@@ -16,6 +17,8 @@ public class unitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public Unitychan_forward unitychan_Forward;
     [HideInInspector] public Unitychan_Move unitychan_Move;
     JumpPhase jumpPhase;
+    [HideInInspector] public UnitychanCollider unitychanCollider;
+    WallKickPhase wallKickPhase;
     //variable
     [HideInInspector] public GameObject unitychan;
     [HideInInspector] public Animator unitychan_Anim;
@@ -24,9 +27,11 @@ public class unitychan_CNTRL : MonoBehaviour {
     AnimatorStateInfo currentAnimInfo;
     [HideInInspector] public int RunStateHash;
     [HideInInspector] public int JumpStateHash;
+    [HideInInspector] public int LangingStateHash;
     int unitychanAnimHash;
     int previousHash;
     [HideInInspector] public float unitychanAnimTime;
+    KeyCode? downKeyCode;
     //phase
     public MovePhase movePhase;
 
@@ -41,22 +46,30 @@ public class unitychan_CNTRL : MonoBehaviour {
         unitychan_Forward = GetComponent<Unitychan_forward>();
         unitychan_Move = GetComponent<Unitychan_Move>();
         jumpPhase = GetComponent<JumpPhase>();
+        wallKickPhase = GetComponent<WallKickPhase>();
 
         //処理
         Unitychan_Initializer.MyStart();
         unitychan_Forward.MyStart();
         unitychan_Move.MyStart();
         jumpPhase.MyStart();
+        wallKickPhase.MyStart();
 
         //初期の動き
     }
 
     // Update is called once per frame
     void Update () {
+        //変数用意
+        currentAnimInfo = unitychan_Anim.GetCurrentAnimatorStateInfo(0);
+        unitychanAnimHash = currentAnimInfo.fullPathHash;
+        unitychanAnimTime = currentAnimInfo.normalizedTime;
+        downKeyCode = GetKeyDownCode.getKeyDownCode();
 
-        //Debug.Log(Vector3.SignedAngle(unitychan.transform.forward, new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z), new Vector3(0, 1, 0)));
+        //衝突判定
+        unitychanCollider.MyUpdate();
 
-        //Animator制御 & OnChanged
+        //Animator制御(AnimatorのPhase遷移)
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             unitychan_Anim.SetTrigger("Run");
@@ -66,11 +79,25 @@ public class unitychan_CNTRL : MonoBehaviour {
             unitychan_Anim.SetTrigger("Jump");
         }
 
-        //Script制御
-        //変数用意
-        currentAnimInfo = unitychan_Anim.GetCurrentAnimatorStateInfo(0);
-        unitychanAnimHash = currentAnimInfo.fullPathHash;
-        unitychanAnimTime = currentAnimInfo.normalizedTime;
+        //Script制御(ScriptのPhase遷移)
+        if (unitychanAnimHash != previousHash)
+        {
+            //OnEnd()
+            if (previousHash == JumpStateHash)
+            {
+                jumpPhase.OnEnd();
+            }
+            //OnChanged()
+            if (unitychanAnimHash == JumpStateHash)
+            {
+                jumpPhase.OnChanged();
+            }
+            if (unitychanAnimHash == LangingStateHash)
+            {
+                wallKickPhase.FirstJumpOnChanged();
+            }
+            previousHash = unitychanAnimHash;
+        }
         //MyUpdate()
         if (unitychanAnimHash == RunStateHash)
         {
@@ -81,21 +108,11 @@ public class unitychan_CNTRL : MonoBehaviour {
             jumpPhase.MyUpdate();
 
         }
-
-        if(unitychanAnimHash != previousHash)
+        else if(unitychanAnimHash == LangingStateHash)
         {
-            //OnEnd()
-            if(previousHash == JumpStateHash)
-            {
-                jumpPhase.OnEnd();
-            }
-            //OnChanged()
-            if(unitychanAnimHash == JumpStateHash)
-            {
-                jumpPhase.OnChanged();
-            }
-            previousHash = unitychanAnimHash;
+            wallKickPhase.FirstJumpUpdate();
         }
+
 
     }
 

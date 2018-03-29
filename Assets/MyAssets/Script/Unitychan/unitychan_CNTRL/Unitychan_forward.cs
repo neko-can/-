@@ -35,7 +35,6 @@ public class Unitychan_forward : MonoBehaviour {
         MainCameraFxy = new Vector3(CameraForward.x, 0, CameraForward.z);
         UnitychanFxy = new Vector3(UnityChan.transform.forward.x, 0, UnityChan.transform.forward.z);
         AngleDifferenceXY = Vector3.SignedAngle(UnitychanFxy, MainCameraFxy, new Vector3(0, 1, 0));
-        Debug.Log(Vector3.SignedAngle(UnitychanFxy, MainCameraFxy, new Vector3(0, 1, 0)));
 
         //処理
         if (maxTurnAngle < AngleDifferenceXY)

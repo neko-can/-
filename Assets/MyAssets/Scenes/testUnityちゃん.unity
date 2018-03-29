@@ -298,12 +298,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 38003007}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1711153538}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &61481378
 GameObject:
@@ -1916,12 +1916,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 482739877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a52f1d2dd8d0cb4ebfb300b7f650593, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c2db5236dc372144b6efef38499f53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VRCamera: {fileID: 820078686}
-  targetObject: {fileID: 1281752928}
-  distance: 3
+  CameraParent: {fileID: 1026594475}
+  targetObject: {fileID: 38003007}
 --- !u!4 &482739879
 Transform:
   m_ObjectHideFlags: 0
@@ -4158,7 +4157,7 @@ Transform:
   m_Children:
   - {fileID: 1281752929}
   m_Father: {fileID: 1711153538}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047358561
 GameObject:
@@ -5382,6 +5381,7 @@ GameObject:
   - component: {fileID: 1377179973}
   - component: {fileID: 1377179974}
   - component: {fileID: 1377179972}
+  - component: {fileID: 1377179975}
   m_Layer: 0
   m_Name: unitychan_CNTRL
   m_TagString: Untagged
@@ -5415,12 +5415,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitychan_Forward: {fileID: 0}
   unitychan_Move: {fileID: 0}
+  unitychanCollider: {fileID: 0}
   unitychan: {fileID: 1711153535}
   unitychan_Anim: {fileID: 0}
   MainCamera: {fileID: 0}
   timeCount: 0
   RunStateHash: 0
   JumpStateHash: 0
+  LangingStateHash: 0
   unitychanAnimTime: 0
   runningSpeed: 6
 --- !u!114 &1377179968
@@ -5506,6 +5508,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d04b33bddec80840ae97a6e227df3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1377179975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1377179965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c1f16efc99c6644bd5fdacf03a3595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1385685986
@@ -6579,6 +6592,7 @@ GameObject:
   - component: {fileID: 1711153538}
   - component: {fileID: 1711153536}
   - component: {fileID: 1711153539}
+  - component: {fileID: 1711153537}
   m_Layer: 0
   m_Name: unitychan
   m_TagString: Untagged
@@ -6604,9 +6618,23 @@ Animator:
   m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
     are already bound by a Humanoid avatar. These transforms can only be changed by
     Humanoid clips.\n\tTransform 'Character1_Hips'\n\tTransform 'Character1_Reference'\n\tFrom
-    animation clip 'MyJump'"
+    animation clip 'MyJump'\n\tFrom animation clip 'MyJump'\n\tFrom animation clip
+    'MyJump'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1711153537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1711153535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e830821a0a7d54598af1e14efd7e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherCllider: {fileID: 0}
+  IsHit: 0
 --- !u!4 &1711153538
 Transform:
   m_ObjectHideFlags: 0
@@ -6617,8 +6645,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1039824893}
   - {fileID: 38003008}
+  - {fileID: 1039824893}
   - {fileID: 1902498600}
   m_Father: {fileID: 0}
   m_RootOrder: 1
