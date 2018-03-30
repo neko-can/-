@@ -28,7 +28,6 @@ public class TurnPhase : MonoBehaviour {
 
     void MyUpdate()
     {
-        Unitychan_CNTRL.movePhase = new MovePhase(Unitychan_CNTRL.unitychan_Move.MyUpdate);
     }
     void OnChanged()
     {

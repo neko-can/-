@@ -12,12 +12,14 @@ public class unitychan_CNTRL : MonoBehaviour {
     /// </summary>
 
     //必要な変数
+    //souce
+    [HideInInspector] public CNTRLs cntrls;
     //script
-    unitychan_Initializer Unitychan_Initializer;
     [HideInInspector] public Unitychan_forward unitychan_Forward;
-    [HideInInspector] public Unitychan_Move unitychan_Move;
-    JumpPhase jumpPhase;
     [HideInInspector] public UnitychanCollider unitychanCollider;
+    //phase
+    unitychan_Initializer Unitychan_Initializer;
+    JumpPhase jumpPhase;
     WallKickPhase wallKickPhase;
     WaitPhase waitPhase;
     RunPhase runPhase;
@@ -54,7 +56,6 @@ public class unitychan_CNTRL : MonoBehaviour {
         //処理
         Unitychan_Initializer.MyStart();
         unitychan_Forward.MyStart();
-        unitychan_Move.MyStart();
         jumpPhase.MyStart();
         wallKickPhase.MyStart();
         waitPhase.MyStart();

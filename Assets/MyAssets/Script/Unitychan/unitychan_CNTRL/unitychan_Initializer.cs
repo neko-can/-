@@ -9,13 +9,16 @@ public class unitychan_Initializer : MonoBehaviour {
     public void MyStart()
     {
         //変数設定
+        //target
         Unitychan_CNTRL = GetComponent<unitychan_CNTRL>();
-        Unitychan_CNTRL.unitychan = GameObject.Find("unitychan");
+        //souce
+        Unitychan_CNTRL.cntrls = transform.parent.gameObject.GetComponent<CNTRLs>();
+        //variable
+        Unitychan_CNTRL.unitychan = Unitychan_CNTRL.cntrls.unitychan;
         Unitychan_CNTRL.MainCamera = GameObject.Find("Player/Main Camera");
         //script
         Unitychan_CNTRL.unitychanCollider = Unitychan_CNTRL.unitychan.GetComponent<UnitychanCollider>();
         Unitychan_CNTRL.unitychan_Forward = GetComponent<Unitychan_forward>();
-        Unitychan_CNTRL.unitychan_Move = GetComponent<Unitychan_Move>();
         //Animator
         Unitychan_CNTRL.unitychan_Anim = Unitychan_CNTRL.unitychan.GetComponent<Animator>();
         Unitychan_CNTRL.RunStateHash = Animator.StringToHash("Base Layer.Run");

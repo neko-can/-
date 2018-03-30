@@ -9,8 +9,8 @@ public class game_CNTRL_Initializer : MonoBehaviour {
     public void Initialize()
     {
         Game_CNTRL = GetComponent<game_CNTRL>();
-        Game_CNTRL.Unitychan_CNTRL = GetComponent<unitychan_CNTRL>();
-        Game_CNTRL.unitychan = Game_CNTRL.Unitychan_CNTRL.unitychan;
+        Game_CNTRL.cntrls = transform.parent.gameObject.GetComponent<CNTRLs>();
+        Game_CNTRL.unitychan = Game_CNTRL.cntrls.unitychan;
         Game_CNTRL.startPoint = Game_CNTRL.MapInScene.transform.Find("Pointers/startPoint").gameObject;
         Game_CNTRL.StartPointDirection = Game_CNTRL.MapInScene.transform.Find("Pointers/StartPointDirection").gameObject;
         Game_CNTRL.MainCamera = GameObject.Find("Player/Main Camera");

@@ -5,7 +5,7 @@ using UnityEngine;
 public class game_CNTRL : MonoBehaviour {
 
     //ソース
-    [HideInInspector] public unitychan_CNTRL Unitychan_CNTRL;
+    [HideInInspector] public CNTRLs cntrls;
     //必要な変数
     [HideInInspector] public GameObject unitychan;
     public GameObject MapInScene;
