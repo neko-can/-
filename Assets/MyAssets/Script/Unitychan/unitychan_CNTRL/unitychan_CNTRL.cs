@@ -39,7 +39,11 @@ public class unitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public float unitychanAnimTime;
     [HideInInspector] public KeyCode? downKeyCode;
     [HideInInspector] public Vector3 unitychanVelocity;
-    [HideInInspector] public float jumpStartTime;
+    [HideInInspector] public GameObject rayColliderObject = null;
+    [HideInInspector] public float jumpTime;
+    //parameter
+    [HideInInspector] public float jumpStartTime = 0.2f;
+    [HideInInspector] public float jumpEndTime = 0.7f;
 
     // Use this for initialization
     void Start () {
@@ -80,7 +84,7 @@ public class unitychan_CNTRL : MonoBehaviour {
             }
             else if(previousHash == LandingStateHash)
             {
-
+                wallKickPhase.FirstJumpOnEnd();
             }
             else if(previousHash == RunStateHash)
             {

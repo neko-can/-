@@ -18,8 +18,18 @@ public class WallKickPhase : MonoBehaviour {
     GameObject MainCamera;
     Vector3 resetEularRotation;
     bool IsOnJump = true;
+    bool IsOnEndJump = true;
     float unitychanAnimTime;
     float jumpStartTime;
+    float jumpEndTime;
+    Vector3 unitychanVelocity;
+    GameObject rayColliderObject;
+    float angleAxisX;
+    float angularSpeedAxisX;
+    Vector3 rotateAxisX;
+    KeyCode? downKeyCode;
+    float jumpTime;
+    float firstJumpTime;
     //parameter
     float first2ndJumpVelocity = 10f;
 
@@ -33,27 +43,54 @@ public class WallKickPhase : MonoBehaviour {
         unitychanRb = unitychan.GetComponent<Rigidbody>();
         MainCamera = Unitychan_CNTRL.MainCamera;
         jumpStartTime = Unitychan_CNTRL.jumpStartTime;
+        jumpEndTime = Unitychan_CNTRL.jumpEndTime;
     }
 
     //FirstJump
     public void FirstJumpUpdate()
     {
+        downKeyCode = Unitychan_CNTRL.downKeyCode;
         unitychanAnimTime = Unitychan_CNTRL.unitychanAnimTime;
 
-        if(IsOnJump && unitychanAnimTime > jumpStartTime)
+        if (jumpStartTime < unitychanAnimTime && unitychanAnimTime < jumpEndTime)
         {
+            if (IsOnJump)
+            {
+                IsOnJump = false;
+                unitychanRb.velocity = unitychanVelocity;
+            }
 
+            unitychan.transform.Rotate(rotateAxisX, angularSpeedAxisX * Time.deltaTime);
+        }
+        
+        if (IsOnEndJump && unitychanAnimTime > jumpEndTime)
+        {
+            IsOnEndJump = false;
+            unitychanAnim.enabled = false;
         }
 
-        //unitychan.transform.position = contactPoint;
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        //2ndJumpへ
+        if(downKeyCode == KeyCode.Alpha1)
         {
-            unitychanAnim.SetTrigger("SecondJump");
+            unitychanAnim.enabled = true;
         }
 
     }
     public void FirstJumpOnChanged()
     {
+        //必要な変数
+        unitychanVelocity = Unitychan_CNTRL.unitychanVelocity;
+        rayColliderObject = Unitychan_CNTRL.rayColliderObject;
+        angleAxisX = Vector3.SignedAngle(unitychan.transform.up, rayColliderObject.transform.forward, new Vector3(1, 0, 0));
+        jumpTime = Unitychan_CNTRL.jumpTime;
+        firstJumpTime = (jumpEndTime - jumpStartTime) * jumpTime;
+        angularSpeedAxisX = -angleAxisX / firstJumpTime;
+        rotateAxisX = unitychan.transform.right;
+    }
+    public void FirstJumpOnEnd()
+    {
+        IsOnJump = true;
+        IsOnEndJump = true;
     }
     public void SecondJumpUpdate()
     {

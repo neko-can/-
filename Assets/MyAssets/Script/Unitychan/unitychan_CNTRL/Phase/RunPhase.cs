@@ -38,7 +38,7 @@ public class RunPhase : MonoBehaviour {
         unitychan_Forward.MyUpdate();
         
         //遷移条件
-        if(downKeyCode == KeyCode.Alpha2)
+        if(downKeyCode == KeyCode.Alpha1)
         {
             UnitychanAnim.SetTrigger("Jump");
         }
