@@ -17,6 +17,9 @@ public class WallKickPhase : MonoBehaviour {
     Animator unitychanAnim;
     GameObject MainCamera;
     Vector3 resetEularRotation;
+    bool IsOnJump = true;
+    float unitychanAnimTime;
+    float jumpStartTime;
     //parameter
     float first2ndJumpVelocity = 10f;
 
@@ -29,33 +32,31 @@ public class WallKickPhase : MonoBehaviour {
         unitychanAnim = Unitychan_CNTRL.unitychan_Anim;
         unitychanRb = unitychan.GetComponent<Rigidbody>();
         MainCamera = Unitychan_CNTRL.MainCamera;
+        jumpStartTime = Unitychan_CNTRL.jumpStartTime;
     }
 
     //FirstJump
     public void FirstJumpUpdate()
     {
+        unitychanAnimTime = Unitychan_CNTRL.unitychanAnimTime;
+
+        if(IsOnJump && unitychanAnimTime > jumpStartTime)
+        {
+
+        }
+
         //unitychan.transform.position = contactPoint;
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            resetEularRotation = new Vector3(0, unitychan.transform.eulerAngles.y, unitychan.transform.eulerAngles.z);
-            unitychan.transform.eulerAngles = resetEularRotation;
-            unitychanRb.useGravity = true;
-
             unitychanAnim.SetTrigger("SecondJump");
         }
+
     }
     public void FirstJumpOnChanged()
     {
-        //contactPoint = unitychan.transform.position;
-        unitychanRb.velocity = Vector3.zero;
-        unitychanRb.useGravity = false;
-        otherCollider = unitychanCollider.otherCllider;
-
-        unitychan.transform.up = otherCollider.transform.forward;
     }
     public void SecondJumpUpdate()
     {
-        unitychanRb.velocity = MainCamera.transform.forward * first2ndJumpVelocity;
     }
     public void SecondJumpOnChanged()
     {

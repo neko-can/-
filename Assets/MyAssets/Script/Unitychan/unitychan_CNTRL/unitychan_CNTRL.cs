@@ -38,6 +38,8 @@ public class unitychan_CNTRL : MonoBehaviour {
     int previousHash;
     [HideInInspector] public float unitychanAnimTime;
     [HideInInspector] public KeyCode? downKeyCode;
+    [HideInInspector] public Vector3 unitychanVelocity;
+    [HideInInspector] public float jumpStartTime;
 
     // Use this for initialization
     void Start () {

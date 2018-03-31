@@ -23,12 +23,15 @@ public class JumpPhase : MonoBehaviour {
     float jumpTime;
     public GameObject rayObject;
     GameObject rayClone;
+    float angularSpeed;
+    float angleAxisX;
     //parameter
     float firstVelocityY = 11f;
     float firstVelocityF = 5f;
     //float maxHeightTime = 0.5f;
     float jumpStartTime = 0.2f;
-    float rayStopTime = 0.4f;
+    float jumpEndTime = 0.7f;
+    float rayStopTime = 0.6f;
 
     public void MyStart()
     {
@@ -37,6 +40,7 @@ public class JumpPhase : MonoBehaviour {
         unitychan = Unitychan_CNTRL.unitychan;
         unitychanRb = unitychan.GetComponent<Rigidbody>();
         unitychanCollider = Unitychan_CNTRL.unitychanCollider;
+        Unitychan_CNTRL.jumpStartTime = jumpStartTime;
     }
 
     public void MyUpdate()
@@ -48,7 +52,6 @@ public class JumpPhase : MonoBehaviour {
         if (IsOnJump && unitychanAnimTime >jumpStartTime)
         {
             unitychanRb.velocity = unitychanVelocity;
-
             //unitychanRb.AddForce(new Vector3(0, 100, 0));
             IsOnJump = false;
         }
@@ -60,33 +63,35 @@ public class JumpPhase : MonoBehaviour {
         //    unitychanRb.velocity = unitychanVelocity;
         //}
         //壁キック遷移判定
-        //if (unitychanCollider.IsHit)
-        //{
-        //    if (0.2f < unitychanAnimTime && unitychanAnimTime < 0.6f)
-        //    {
-        //        unitychan_Anim.SetTrigger("Landing");
-        //    }
-        //}
-    }
+        if (Physics.Raycast(ray, out raycastHit, Vector3.Distance(rayPos, rayStartPos)))
+        {
+            Debug.Log(raycastHit.collider.name);
+            angleAxisX = Vector3.SignedAngle(unitychan.transform.up, raycastHit.collider.transform.forward, new Vector3(1, 0, 0));
 
-    void JudgeToSecondJump()
-    {
-        //firstVelocity設定後にRayを飛ばし、当たったら遷移
-        rayStartPos = unitychan.transform.position;
-        rayDirection = unitychan.transform.forward;
-        ray = new Ray(rayStartPos, rayDirection);
+            if (unitychanAnimTime > jumpEndTime)
+            {
+                unitychan_Anim.enabled = false;
+            }
+
+            unitychan_Anim.SetTrigger("Landing");
+
+            //if (0.2f < unitychanAnimTime && unitychanAnimTime < 0.6f)
+            //{
+            //    unitychan_Anim.SetTrigger("Landing");
+            //}
+        }
     }
 
     public void OnChanged()
     {
         //初速度変更
+        unitychanRb.velocity = new Vector3(0, unitychanRb.velocity.y);
         //初速度取得
         unitychanVelocity = unitychanRb.velocity;
         unitychanVelocity += unitychan.transform.forward * firstVelocityF + new Vector3(0, firstVelocityY);
-
+        Unitychan_CNTRL.unitychanVelocity = unitychanVelocity;
         //落下時間計算
         jumpTime = Mathf.Abs(2 * unitychanVelocity.y / Physics.gravity.y);
-        Debug.Log(jumpTime);
         //Ray情報取得
         rayPos = unitychan.transform.position;
         rayPos.x += unitychanVelocity.x * rayStopTime * jumpTime;
@@ -95,6 +100,17 @@ public class JumpPhase : MonoBehaviour {
         //ray視覚化
         rayClone = GameObject.Instantiate(rayObject);
         rayClone.transform.position = rayPos;
+
+        //Hitのために
+        rayStartPos = unitychan.transform.position;
+        rayDirection = rayPos - rayStartPos;
+        ray = new Ray(rayStartPos, rayDirection);
+
+    }
+
+    void unityChanRotation()
+    {
+
     }
 
     public void OnEnd()
