@@ -16,6 +16,7 @@ public class unitychan_Initializer : MonoBehaviour {
         //variable
         Unitychan_CNTRL.unitychan = Unitychan_CNTRL.cntrls.unitychan;
         Unitychan_CNTRL.MainCamera = GameObject.Find("Player/Main Camera");
+        Unitychan_CNTRL.unitychanRb = Unitychan_CNTRL.unitychan.GetComponent<Rigidbody>();
         //script
         Unitychan_CNTRL.unitychanCollider = Unitychan_CNTRL.unitychan.GetComponent<UnitychanCollider>();
         Unitychan_CNTRL.unitychan_Forward = GetComponent<Unitychan_forward>();

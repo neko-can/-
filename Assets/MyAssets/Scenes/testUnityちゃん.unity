@@ -810,6 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cntrls: {fileID: 0}
+  viewerForRunning: {fileID: 0}
   unitychan: {fileID: 0}
   Player: {fileID: 0}
   MainCamera: {fileID: 0}
@@ -827,9 +828,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.25
-  m_Height: 1.83
+  m_Height: 1.45
   m_Direction: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.11, y: 0, z: 0}
 --- !u!1001 &615687347
 Prefab:
   m_ObjectHideFlags: 0
@@ -1602,6 +1603,7 @@ MonoBehaviour:
   unitychanCollider: {fileID: 0}
   unitychan: {fileID: 0}
   unitychan_Anim: {fileID: 0}
+  unitychanRb: {fileID: 0}
   MainCamera: {fileID: 0}
   timeCount: 0
   RunStateHash: 0
@@ -1609,7 +1611,6 @@ MonoBehaviour:
   LandingStateHash: 0
   WaitStateHash: 0
   unitychanAnimTime: 0
-  runningSpeed: 6
 --- !u!114 &1377179968
 MonoBehaviour:
   m_ObjectHideFlags: 0

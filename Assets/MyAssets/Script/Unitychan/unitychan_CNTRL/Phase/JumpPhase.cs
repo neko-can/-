@@ -17,7 +17,7 @@ public class JumpPhase : MonoBehaviour {
     float unitychanAnimTime;
     //parameter
     float firstVelocityY = 15f;
-    float firstVelocityF = 10f;
+    float firstVelocityF = 5f;
     float maxHeight = 6f;
     float maxHeightTime = 0.5f;
     float jumpStartTime = 0.2f;
@@ -50,24 +50,30 @@ public class JumpPhase : MonoBehaviour {
         //落下速度上昇
         if (unitychanAnimTime > maxHeightTime)
         {
-            unitychanVelocity = unitychanRb.velocity;
-            unitychanVelocity.y -= 1.3f;
-            unitychanRb.velocity = unitychanVelocity;
+            //unitychanVelocity = unitychanRb.velocity;
+            //unitychanVelocity.y -= 1.3f;
+            //unitychanRb.velocity = unitychanVelocity;
         }
         //壁キック遷移判定
-        if (unitychanCollider.IsHit)
-        {
-            if(0.2f < unitychanAnimTime && unitychanAnimTime < 0.6f)
-            {
-                unitychan_Anim.SetTrigger("Landing");
-            }
-        }
+        //if (unitychanCollider.IsHit)
+        //{
+        //    if (0.2f < unitychanAnimTime && unitychanAnimTime < 0.6f)
+        //    {
+        //        unitychan_Anim.SetTrigger("Landing");
+        //    }
+        //}
+    }
+
+    void JudgeToSecondJump()
+    {
+        //firstVelocity設定後にRayを飛ばし、当たったら遷移
     }
 
     public void OnChanged()
     {
 
     }
+
     public void OnEnd()
     {
         IsOnJump = true;

@@ -26,6 +26,7 @@ public class unitychan_CNTRL : MonoBehaviour {
     //variable
     [HideInInspector] public GameObject unitychan;
     [HideInInspector] public Animator unitychan_Anim;
+    [HideInInspector] public Rigidbody unitychanRb;
     [HideInInspector] public GameObject MainCamera;
     [HideInInspector] public float timeCount;
     AnimatorStateInfo currentAnimInfo;
@@ -37,12 +38,6 @@ public class unitychan_CNTRL : MonoBehaviour {
     int previousHash;
     [HideInInspector] public float unitychanAnimTime;
     [HideInInspector] public KeyCode? downKeyCode;
-    //phase
-    public MovePhase movePhase;
-
-    //parameters
-    public float runningSpeed = 13f;
-    float stopTurnTime = 2f;
 
     // Use this for initialization
     void Start () {
@@ -61,7 +56,6 @@ public class unitychan_CNTRL : MonoBehaviour {
         waitPhase.MyStart();
         runPhase.MyStart();
 
-        //初期の動き
     }
 
     // Update is called once per frame

@@ -9,8 +9,11 @@ public class RunPhase : MonoBehaviour {
     Animator UnitychanAnim;
     GameObject unitychan;
     KeyCode? downKeyCode;
+    Vector3 unitychanVelocity;
+    Rigidbody unitychanRb;
+    Transform unitychanTf;
     //parameter
-    float runningSpeed = 13f;
+    float runningSpeed = 5f;
 
     public void MyStart()
     {
@@ -18,12 +21,19 @@ public class RunPhase : MonoBehaviour {
         unitychan_Forward = Unitychan_CNTRL.unitychan_Forward;
         UnitychanAnim = Unitychan_CNTRL.unitychan_Anim;
         unitychan = Unitychan_CNTRL.unitychan;
+        unitychanRb = unitychan.GetComponent<Rigidbody>();
+        unitychanTf = unitychan.transform;
     }
     public void MyUpdate()
     {
-        //速度設定
         downKeyCode = Unitychan_CNTRL.downKeyCode;
-        unitychan.GetComponent<Rigidbody>().velocity = unitychan.transform.forward * runningSpeed;
+
+        //速度設定(重力による速度を打ち消さないようにする)
+        unitychanVelocity = unitychanRb.velocity;
+        unitychanVelocity.x = unitychanTf.forward.x * runningSpeed;
+        unitychanVelocity.z = unitychanTf.forward.z * runningSpeed;
+        unitychanRb.velocity = unitychanVelocity;
+
         //向き設定
         unitychan_Forward.MyUpdate();
         
@@ -32,5 +42,9 @@ public class RunPhase : MonoBehaviour {
         {
             UnitychanAnim.SetTrigger("Jump");
         }
+    }
+
+    public void OnChanged()
+    {
     }
 }
