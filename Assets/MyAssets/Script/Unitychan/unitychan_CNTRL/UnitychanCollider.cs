@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UnitychanCollider : MonoBehaviour {
 
-    [HideInInspector] public GameObject otherCllider;
-    GameObject previousCollider;
+    [HideInInspector] public GameObject otherCllider = null;
+    GameObject previousCollider = null;
     [HideInInspector] public bool IsHit = false;
 
 	// Use this for initialization
@@ -21,13 +21,22 @@ public class UnitychanCollider : MonoBehaviour {
     {
         otherCllider = collision.gameObject;
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        otherCllider = collision.gameObject;
+    }
 
     public void MyUpdate()
     {
-        if (otherCllider != previousCollider)
+        if (otherCllider != null)
         {
             previousCollider = otherCllider;
-            IsHit = true;
+            if (otherCllider.transform.parent.name == "Walls")
+            {
+                IsHit = true;
+            }
+            otherCllider = null;
+
         }
         else
         {
