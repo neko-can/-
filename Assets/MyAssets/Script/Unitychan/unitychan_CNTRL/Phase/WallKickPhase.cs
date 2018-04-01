@@ -10,7 +10,7 @@ public class WallKickPhase : MonoBehaviour {
     //script
     UnitychanCollider unitychanCollider;
     //variable
-    Vector3 contactPoint;
+    Vector3? contactPoint;
     GameObject unitychan;
     Rigidbody unitychanRb;
     GameObject otherCollider;
@@ -34,7 +34,7 @@ public class WallKickPhase : MonoBehaviour {
     float jumpMaxHeightTime;
     float jumpTime;
     Vector3 jumpMaxPosition;
-    bool IsHitWall;
+    bool IsWallHit;
     //ver2
     float newNormAnimTime;
     Vector3 startUp;
@@ -47,6 +47,10 @@ public class WallKickPhase : MonoBehaviour {
     Quaternion startQ;
     //ver4
     Vector3 EularRight;
+
+    Vector3 forceDirection;
+    float forceMagni = 100f;
+
     //parameter
     float first2ndJumpVelocity = 10f;
 
@@ -69,7 +73,7 @@ public class WallKickPhase : MonoBehaviour {
     {
         downKeyCode = Unitychan_CNTRL.downKeyCode;
         unitychanAnimTime = Unitychan_CNTRL.unitychanAnimTime;
-        IsHitWall = Unitychan_CNTRL.IsHit;
+        IsWallHit = Unitychan_CNTRL.IsWallHit;
 
         //飛んでいる時間
         if (jumpStartTime < unitychanAnimTime && unitychanAnimTime < jumpEndTime)
@@ -104,11 +108,18 @@ public class WallKickPhase : MonoBehaviour {
             IsOnEndJump = false;
             unitychanAnim.enabled = false;
         }
-        if(IsHitWall && unitychanAnimTime > jumpMaxHeightTime)
+        if(IsWallHit)
+        {
+            Debug.Log("check");
+            contactPoint = Unitychan_CNTRL.contactPoint;
+            forceDirection = ((Vector3)contactPoint - unitychan.transform.position).normalized;
+            unitychanRb.AddForce(forceDirection * forceMagni);
+        }
+        if(IsWallHit && unitychanAnimTime > jumpMaxHeightTime)
         {
             //unitychanRb.useGravity = false;
             //unitychanRb.constraints = RigidbodyConstraints.FreezePosition;
-            unitychanRb.velocity = Vector3.zero;
+            //unitychanRb.velocity = Vector3.zero;
         }
 
         //2ndJumpへ
@@ -124,6 +135,7 @@ public class WallKickPhase : MonoBehaviour {
         unitychanVelocity = Unitychan_CNTRL.unitychanVelocity;
         rayColliderObject = Unitychan_CNTRL.rayColliderObject;
         angleRight = Vector3.SignedAngle(unitychan.transform.up, rayColliderObject.transform.forward, unitychan.transform.right);
+        Debug.Log(angleRight.ToString());
         jumpTime = Unitychan_CNTRL.jumpTime; //空中に浮いている時間
         angularSpeedRight = -angleRight / jumpTime;
         rotateRight = unitychan.transform.right;
@@ -131,7 +143,7 @@ public class WallKickPhase : MonoBehaviour {
         angleUp = Vector3.SignedAngle(unitychan.transform.forward, rayColliderObject.transform.forward, unitychan.transform.up);
         angularSpeedUp = -angleUp / jumpTime;
         rotateUp = unitychan.transform.up;
-        Debug.Log(angleUp);
+        Debug.Log(angleUp.ToString());
 
         //ver2
         //startUp = unitychan.transform.up;

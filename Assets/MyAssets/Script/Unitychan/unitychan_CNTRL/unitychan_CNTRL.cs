@@ -41,7 +41,8 @@ public class unitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public Vector3 unitychanVelocity;
     [HideInInspector] public GameObject rayColliderObject = null;
     [HideInInspector] public float jumpTime;
-    [HideInInspector] public bool IsHit;
+    [HideInInspector] public bool IsWallHit;
+    [HideInInspector] public Vector3? contactPoint;
     //parameter
     [HideInInspector] public float jumpMaxHeightTime = 0.3f;
     [HideInInspector] public float jumpStartTime = 0.2f;
@@ -75,7 +76,8 @@ public class unitychan_CNTRL : MonoBehaviour {
         downKeyCode = GetKeyDownCode.getKeyDownCode();
         //衝突判定
         unitychanCollider.MyUpdate();
-        IsHit = unitychanCollider.IsHit;
+        IsWallHit = unitychanCollider.IsWallHit;
+        contactPoint = unitychanCollider.contactPoint;
 
         //Script制御(ScriptのPhase遷移)
         if (unitychanAnimHash != previousHash)

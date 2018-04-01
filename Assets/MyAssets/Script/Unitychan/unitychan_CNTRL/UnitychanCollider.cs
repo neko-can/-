@@ -6,7 +6,9 @@ public class UnitychanCollider : MonoBehaviour {
 
     [HideInInspector] public GameObject otherCllider = null;
     GameObject previousCollider = null;
-    [HideInInspector] public bool IsHit = false;
+    [HideInInspector] public bool IsWallHit = false;
+    [HideInInspector] public bool IsOnWallHit = false;
+    [HideInInspector] public Vector3? contactPoint = null;
 
 	// Use this for initialization
 	void Start () {
@@ -20,27 +22,40 @@ public class UnitychanCollider : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         otherCllider = collision.gameObject;
+        if (otherCllider.transform.parent.name == "Walls")
+        {
+            IsOnWallHit = true;
+            contactPoint = collision.contacts[0].point;
+        }
+
     }
     private void OnCollisionStay(Collision collision)
     {
         otherCllider = collision.gameObject;
+        if (otherCllider.transform.parent.name == "Walls")
+        {
+            IsWallHit = true;
+        }
     }
 
     public void MyUpdate()
     {
-        if (otherCllider != null)
-        {
-            previousCollider = otherCllider;
-            if (otherCllider.transform.parent.name == "Walls")
-            {
-                IsHit = true;
-            }
-            otherCllider = null;
+        IsWallHit = false;
+        IsOnWallHit = false;
+        contactPoint = null;
+        //if (otherCllider != null)
+        //{
+        //    previousCollider = otherCllider;
+        //    if (otherCllider.transform.parent.name == "Walls")
+        //    {
+        //        IsHit = true;
+        //    }
+        //    otherCllider = null;
 
-        }
-        else
-        {
-            IsHit = false;
-        }
+        //}
+        //else
+        //{
+        //    IsHit = false;
+        //}
     }
 }
