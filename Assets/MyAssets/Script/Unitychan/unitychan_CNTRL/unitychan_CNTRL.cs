@@ -42,6 +42,7 @@ public class unitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public GameObject rayColliderObject = null;
     [HideInInspector] public float jumpTime;
     //parameter
+    [HideInInspector] public float jumpMaxHeightTime = 0.5f;
     [HideInInspector] public float jumpStartTime = 0.2f;
     [HideInInspector] public float jumpEndTime = 0.7f;
 

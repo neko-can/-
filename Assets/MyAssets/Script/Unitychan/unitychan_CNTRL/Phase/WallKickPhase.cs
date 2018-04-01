@@ -28,8 +28,10 @@ public class WallKickPhase : MonoBehaviour {
     float angularSpeedAxisX;
     Vector3 rotateAxisX;
     KeyCode? downKeyCode;
+    float jumpMaxHeightTime;
     float jumpTime;
     float firstJumpTime;
+    Vector3 jumpMaxPosition;
     //parameter
     float first2ndJumpVelocity = 10f;
 
@@ -42,6 +44,7 @@ public class WallKickPhase : MonoBehaviour {
         unitychanAnim = Unitychan_CNTRL.unitychan_Anim;
         unitychanRb = unitychan.GetComponent<Rigidbody>();
         MainCamera = Unitychan_CNTRL.MainCamera;
+        jumpMaxHeightTime = Unitychan_CNTRL.jumpMaxHeightTime;
         jumpStartTime = Unitychan_CNTRL.jumpStartTime;
         jumpEndTime = Unitychan_CNTRL.jumpEndTime;
     }
@@ -68,6 +71,12 @@ public class WallKickPhase : MonoBehaviour {
         {
             IsOnEndJump = false;
             unitychanAnim.enabled = false;
+        }
+        if(unitychanAnimTime > jumpMaxHeightTime)
+        {
+            jumpMaxPosition = unitychan.transform.position;
+            unitychan.transform.position = jumpMaxPosition;
+            //unitychanRb.constraints = RigidbodyConstraints.FreezePosition;
         }
 
         //2ndJumpへ
