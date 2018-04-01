@@ -60,7 +60,8 @@ public class WallKickPhase : MonoBehaviour {
                 unitychanRb.velocity = unitychanVelocity;
             }
 
-            unitychan.transform.Rotate(rotateAxisX, angularSpeedAxisX * Time.deltaTime);
+            unitychan.transform.Rotate(rotateAxisX, angularSpeedAxisX * Time.deltaTime, Space.World);
+            Debug.Log(Vector3.SignedAngle(unitychan.transform.up, rayColliderObject.transform.forward, new Vector3(1, 0, 0)));
         }
         
         if (IsOnEndJump && unitychanAnimTime > jumpEndTime)
@@ -81,7 +82,7 @@ public class WallKickPhase : MonoBehaviour {
         //必要な変数
         unitychanVelocity = Unitychan_CNTRL.unitychanVelocity;
         rayColliderObject = Unitychan_CNTRL.rayColliderObject;
-        angleAxisX = Vector3.SignedAngle(unitychan.transform.up, rayColliderObject.transform.forward, new Vector3(1, 0, 0));
+        angleAxisX = Vector3.SignedAngle(unitychan.transform.up, -rayColliderObject.transform.forward, new Vector3(1, 0, 0));
         jumpTime = Unitychan_CNTRL.jumpTime;
         firstJumpTime = (jumpEndTime - jumpStartTime) * jumpTime;
         angularSpeedAxisX = -angleAxisX / firstJumpTime;
