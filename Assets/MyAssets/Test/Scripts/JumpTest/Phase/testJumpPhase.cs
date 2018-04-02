@@ -36,18 +36,22 @@ public class testJumpPhase : MonoBehaviour {
     string RunTrigger;
     string ChargeUpTrigger;
     Vector3 AddVelocity;
+    Vector3 AddLocalVelocity;
+    Vector3 rayContactPoint;
     bool IsFloorHit;
     bool IsWallHit;
-    [HideInInspector] public bool IsWallKick = false;
+    bool IsWallKick = false;
+    bool IsEndWallKick = false;
+    bool previouseKick = false;
     float jumpElapsedTime;
     float stopPosMinNormTime = 0.4f;
     float rayStopNormTime = 0.5f;
     //parameter
-    float firstVelocityY = 11f;
-    float firstVelocityF = 5f;
-    float wallKickVelocity = 10f;
-    float jumpStartTime;
-    float jumpEndTime;
+    float firstVelocityY = 5f;
+    float firstVelocityF = 7f;
+    float wallKickVelocityF = 7f;
+    float wallKickVelocityUp = 3f;
+    float wallKickMaxTime = 1f;
 
     public void MyStart()
     {
@@ -56,8 +60,6 @@ public class testJumpPhase : MonoBehaviour {
         unitychan = Unitychan_CNTRL.unitychan;
         unitychanRb = unitychan.GetComponent<Rigidbody>();
         unitychanCollider = Unitychan_CNTRL.unitychanCollider;
-        jumpStartTime = Unitychan_CNTRL.jumpStartTime;
-        jumpEndTime = Unitychan_CNTRL.jumpEndTime;
         ReleaseTrigger = Unitychan_CNTRL.ReleaseName;
         LandingTrigger = Unitychan_CNTRL.LandingName;
         InAirTrigger = Unitychan_CNTRL.InAirName;
@@ -69,11 +71,9 @@ public class testJumpPhase : MonoBehaviour {
     //足縮めるまで
     public void ChargeUpOnChanged()
     {
-        unitychanRb.useGravity = true;
         if (IsWallKick)
         {
-            unitychan.transform.up = rayOtherObject.transform.forward;
-            unitychanRb.useGravity = false;
+            //unitychan.transform.up = rayOtherObject.transform.forward;
             unitychanRb.velocity = Vector3.zero;
             unitychan_Anim.enabled = false;
         }
@@ -84,6 +84,24 @@ public class testJumpPhase : MonoBehaviour {
     public void ChargeUpUpdate()
     {
         unitychanAnimTime = Unitychan_CNTRL.unitychanAnimTime;
+        downKeyCode = Unitychan_CNTRL.downKeyCode;
+        if (IsWallKick)
+        {
+            unitychanRb.AddForce(-unitychan.transform.up * 10f);
+            //unitychanRb.AddForce((rayContactPoint - unitychan.transform.position) * 10f);
+            if (downKeyCode == KeyCode.Alpha1)
+            {
+                unitychan_Anim.enabled = true;
+            }
+            if(Unitychan_CNTRL.touchCount > 0 && Unitychan_CNTRL.nowTouch.phase == TouchPhase.Began)
+            {
+                unitychan_Anim.enabled = true;
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                unitychan_Anim.enabled = true;
+            }
+        }
     }
 
     //足伸ばすまで
@@ -100,25 +118,20 @@ public class testJumpPhase : MonoBehaviour {
     public void InAirOnChanged()
     {
         //必要な変数
+        AddVelocity = AddWallKickJump(); //加える速度の初期値
+        ToWallKick(); //WallKickやるか計算
+
         if (IsWallKick)
         {
-            unitychanRb.velocity = AddWallKickJump();
+            unitychanRb.useGravity = false;
+            unitychanRb.velocity = AddVelocity;
+            //unitychan.transform.up = rayOtherObject.transform.forward;
+            unitychan_Anim.SetTrigger(ChargeUpTrigger);
         }
         else
         {
             unitychanRb.useGravity = true;
             unitychanRb.velocity = AddNormalJump();
-        }
-        jumpElapsedTime = 0f;
-        //Debug.Log("LandingTrigger");
-
-        //WallKickMotion入れるか判定
-        if (ToWallKick())
-        {
-            unitychan_Anim.SetTrigger(ChargeUpTrigger);
-        }
-        else
-        {
             unitychan_Anim.SetTrigger(RunTrigger);
         }
     }
@@ -141,46 +154,62 @@ public class testJumpPhase : MonoBehaviour {
     public void LandingUpdate()
     {
         IsFloorHit = Unitychan_CNTRL.IsFloorHit;
+        IsWallHit = Unitychan_CNTRL.IsWallHit;
         otherObject = Unitychan_CNTRL.otherCollider;
-
+        Debug.Log(IsWallHit);
         if(IsFloorHit)
         {
             unitychan_Anim.enabled = true;
-            unitychan.transform.up = otherObject.transform.up;
             //Debug.Log("RunTrigger");
+        }
+        if (IsWallKick)
+        {
+            if (IsFloorHit)
+            {
+                //unitychan.transform.up = otherObject.transform.up;
+            }
+            if (IsWallHit)
+            {
+                unitychan.transform.up = rayOtherObject.transform.forward;
+                unitychan_Anim.enabled = true;
+            }
         }
 
     }
 
     public Vector3 AddNormalJump()
     {
-        AddVelocity = unitychanRb.velocity;
-        AddVelocity += unitychan.transform.forward * firstVelocityF + new Vector3(0, firstVelocityY);
+        AddLocalVelocity = unitychanRb.velocity;
+        //AddLocalVelocity += unitychan.transform.forward * firstVelocityF + new Vector3(0, firstVelocityY);
+        AddLocalVelocity += new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z) * firstVelocityF + MainCamera.transform.up * firstVelocityY;
 
-        jumpFullTime = Mathf.Abs(2 * AddVelocity.y / Physics.gravity.y);
-        return AddVelocity;
+        jumpFullTime = Mathf.Abs(2 * AddLocalVelocity.y / Physics.gravity.y);
+        return AddLocalVelocity;
     }
 
     public Vector3 AddWallKickJump()
     {
-        AddVelocity = MainCamera.transform.forward * wallKickVelocity;
+        //AddLocalVelocity = MainCamera.transform.forward * wallKickVelocityF + MainCamera.transform.up * wallKickVelocityUp;
+        AddLocalVelocity = new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z) * wallKickVelocityF + MainCamera.transform.up * wallKickVelocityUp;
 
-        return AddVelocity;
+        return AddLocalVelocity;
     }
 
-    public bool ToWallKick()
+    public void ToWallKick()
     {
         //初期値設定
         IsWallKick = false;
+        IsEndWallKick = false;
         rayOtherObject = null;
         rayStartPos = unitychan.transform.position;
         rayPos = rayStartPos;
-        rayPos += unitychanRb.velocity * rayStopNormTime * jumpFullTime;
-        rayPos.y += 0.5f * Physics.gravity.y * Mathf.Pow(rayStopNormTime * jumpFullTime, 2);
-        ray = new Ray(rayStartPos, rayPos);
+        rayPos += AddVelocity * wallKickMaxTime;
+        //rayPos.y += 0.5f * Physics.gravity.y * Mathf.Pow(rayStopNormTime * jumpFullTime, 2);
+        ray = new Ray(rayStartPos, rayPos - rayStartPos);
 
         if (Physics.Raycast(ray, out raycastHit, Vector3.Distance(rayPos, rayStartPos)))
         {
+            Debug.Log(raycastHit.collider.name);
             if(raycastHit.collider.gameObject.transform.parent.name == "Walls" && raycastHit.collider.gameObject != rayPreviousObject)
             {
                 rayOtherObject = raycastHit.collider.gameObject;
@@ -188,13 +217,17 @@ public class testJumpPhase : MonoBehaviour {
                 //Debug.Log("RayHit");
                 Debug.Log(rayOtherObject.name);
                 rayPreviousObject = rayOtherObject;
+                rayContactPoint = raycastHit.point;
             }
         }
+        if(previouseKick == true && IsWallKick == false)
+        {
+            IsEndWallKick = true;
+        }
+        previouseKick = IsWallKick;
 
         //rayの視覚化
         rayClone = GameObject.Instantiate(rayObject);
         rayClone.transform.position = rayPos;
-
-        return IsWallKick;
     }
 }

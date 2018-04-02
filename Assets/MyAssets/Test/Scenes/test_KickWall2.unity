@@ -203,7 +203,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.03
+  near clip plane: 1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -649,7 +649,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayObject: {fileID: 1338742967605448, guid: 838638674f3e5fd4e8136fa840c51558, type: 2}
-  IsWallKick: 0
 --- !u!114 &546145833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1559,7 +1558,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1597429465}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 6.85, y: 3.97, z: -12.48}
+  m_LocalPosition: {x: 6.85, y: 3.97, z: -15.41}
   m_LocalScale: {x: 36.25485, y: 6.9491796, z: 1}
   m_Children: []
   m_Father: {fileID: 557351402}

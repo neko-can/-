@@ -6,6 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: "Assets/MyAssets/Scenes/testUnity\u3061\u3083\u3093.unity"
-    guid: aee2fdec6e5af0341a9f5c28482934ed
-  m_configObjects: {}
+    path: Assets/MyAssets/Test/Scenes/test_KickWall2.unity
+    guid: 56f33ed62b0019d46bb7fe09a81e0dde

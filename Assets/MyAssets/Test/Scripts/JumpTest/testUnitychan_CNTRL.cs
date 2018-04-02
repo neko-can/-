@@ -140,6 +140,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
             }
             else if (unitychanAnimHash == RunStateHash)
             {
+                runPhase.OnChanged();
             }
             //Jump
             else if (unitychanAnimHash == ChargeUpHash)

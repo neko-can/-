@@ -12,6 +12,7 @@ public class testRunPhase : MonoBehaviour {
     Rigidbody unitychanRb;
     Transform unitychanTf;
     string jumpTrigger;
+    GameObject otherObject;
     //parameter
     float runningSpeed = 5f;
 
@@ -47,9 +48,18 @@ public class testRunPhase : MonoBehaviour {
         {
             UnitychanAnim.SetTrigger(jumpTrigger);
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            UnitychanAnim.SetTrigger(jumpTrigger);
+        }
     }
 
     public void OnChanged()
     {
+        otherObject = Unitychan_CNTRL.otherCollider;
+        if(unitychan.transform.up != otherObject.transform.up)
+        {
+            unitychan.transform.up = otherObject.transform.up;
+        }
     }
 }

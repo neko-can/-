@@ -28,6 +28,10 @@ public class testWaitPhase : MonoBehaviour {
         {
             unitychanAnim.SetTrigger("Run");
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            unitychanAnim.SetTrigger("Run");
+        }
     }
 
 }
