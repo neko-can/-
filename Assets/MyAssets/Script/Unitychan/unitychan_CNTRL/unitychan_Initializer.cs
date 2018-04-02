@@ -26,5 +26,6 @@ public class unitychan_Initializer : MonoBehaviour {
         Unitychan_CNTRL.JumpStateHash = Animator.StringToHash("Base Layer.Jump");
         Unitychan_CNTRL.LandingStateHash = Animator.StringToHash("Base Layer.Landing");
         Unitychan_CNTRL.WaitStateHash = Animator.StringToHash("Base Layer.Wait");
+        Unitychan_CNTRL.SecondJumpStateHash = Animator.StringToHash("Base Layer.SecondJump");
     }
 }

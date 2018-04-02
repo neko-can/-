@@ -42,6 +42,10 @@ public class RunPhase : MonoBehaviour {
         {
             UnitychanAnim.SetTrigger("Jump");
         }
+        if(Unitychan_CNTRL.touchCount > 0 && Unitychan_CNTRL.nowTouch.phase == TouchPhase.Began)
+        {
+            UnitychanAnim.SetTrigger("Jump");
+        }
     }
 
     public void OnChanged()

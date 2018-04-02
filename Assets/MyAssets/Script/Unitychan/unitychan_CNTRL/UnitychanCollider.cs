@@ -8,6 +8,7 @@ public class UnitychanCollider : MonoBehaviour {
     GameObject previousCollider = null;
     [HideInInspector] public bool IsWallHit = false;
     [HideInInspector] public bool IsOnWallHit = false;
+    [HideInInspector] public bool IsFloorHit = false;
     [HideInInspector] public Vector3? contactPoint = null;
 
 	// Use this for initialization
@@ -27,7 +28,6 @@ public class UnitychanCollider : MonoBehaviour {
             IsOnWallHit = true;
             contactPoint = collision.contacts[0].point;
         }
-
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -36,13 +36,18 @@ public class UnitychanCollider : MonoBehaviour {
         {
             IsWallHit = true;
         }
+        else if(otherCllider.transform.parent.name == "Floor")
+        {
+            IsFloorHit = true;
+        }
     }
 
     public void MyUpdate()
     {
         IsWallHit = false;
         IsOnWallHit = false;
-        contactPoint = null;
+        IsFloorHit = false;
+        //contactPoint = null;
         //if (otherCllider != null)
         //{
         //    previousCollider = otherCllider;

@@ -99,7 +99,7 @@ public class WallKickPhase : MonoBehaviour {
             //unitychan.transform.rotation = Quaternion.Euler(startQ.eulerAngles - Eular * newNormAnimTime);
 
             //ver4
-            unitychan.transform.rotation = Quaternion.Euler(startQ.eulerAngles - Eular * newNormAnimTime + EularRight * newNormAnimTime);
+            //unitychan.transform.rotation = Quaternion.Euler(startQ.eulerAngles - Eular * newNormAnimTime + EularRight * newNormAnimTime);
         }
 
         //ジャンプ終了後（本当は要らない）
@@ -108,26 +108,25 @@ public class WallKickPhase : MonoBehaviour {
             IsOnEndJump = false;
             unitychanAnim.enabled = false;
         }
-        if(IsWallHit)
+        if (IsWallHit && unitychanAnimTime > 0.3f)
         {
-            Debug.Log("check");
             contactPoint = Unitychan_CNTRL.contactPoint;
-            forceDirection = ((Vector3)contactPoint - unitychan.transform.position).normalized;
-            unitychanRb.AddForce(forceDirection * forceMagni);
+            Debug.Log(contactPoint);
+            unitychanRb.useGravity = false;
+            unitychanRb.velocity = Vector3.zero;
+            unitychan.transform.up = rayColliderObject.transform.forward;
         }
-        if(IsWallHit && unitychanAnimTime > jumpMaxHeightTime)
+        if(unitychanAnimTime > jumpEndTime)
         {
-            //unitychanRb.useGravity = false;
-            //unitychanRb.constraints = RigidbodyConstraints.FreezePosition;
-            //unitychanRb.velocity = Vector3.zero;
+            unitychanRb.AddForce(((Vector3)contactPoint - unitychan.transform.position) * 10f);
         }
 
         //2ndJumpへ
         if(downKeyCode == KeyCode.Alpha1)
         {
             unitychanAnim.enabled = true;
+            unitychanAnim.SetTrigger("SecondJump");
         }
-
     }
     public void FirstJumpOnChanged()
     {
@@ -158,8 +157,13 @@ public class WallKickPhase : MonoBehaviour {
 
         //ver4
         Eular = Quaternion.FromToRotation(unitychan.transform.up, -rayColliderObject.transform.forward).eulerAngles;
-        EularRight = Quaternion.FromToRotation(unitychan.transform.forward, rayColliderObject.transform.forward).eulerAngles;
-        Debug.Log(EularRight);
+        Debug.Log(rayColliderObject.transform.forward);
+        //EularRight = Quaternion.FromToRotation(unitychan.transform.forward, rayColliderObject.transform.forward).eulerAngles;
+        //ver5
+        //Eular = Quaternion.LookRotation(-rayColliderObject.transform.up).eulerAngles;
+        //EularRight = Quaternion.LookRotation(rayColliderObject.transform.forward).eulerAngles;
+        Debug.Log("eularRight = " + Eular.ToString());
+        Debug.Log("eularUp = " + EularRight.ToString());
     }
     public void FirstJumpOnEnd()
     {
@@ -168,10 +172,14 @@ public class WallKickPhase : MonoBehaviour {
     }
     public void SecondJumpUpdate()
     {
+        if (Unitychan_CNTRL.IsFloorHit)
+        {
+            unitychan.transform.up = Unitychan_CNTRL.otherCollider.transform.up;
+        }
     }
     public void SecondJumpOnChanged()
     {
-
+        unitychanRb.useGravity = true;
     }
 
 }

@@ -24,6 +24,10 @@ public class WaitPhase : MonoBehaviour {
         {
             unitychanAnim.SetTrigger("Run");
         }
+        if(Unitychan_CNTRL.touchCount>0&&Unitychan_CNTRL.nowTouch.phase == TouchPhase.Began)
+        {
+            unitychanAnim.SetTrigger("Run");
+        }
     }
 
 }

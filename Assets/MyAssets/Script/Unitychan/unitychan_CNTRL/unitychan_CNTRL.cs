@@ -34,6 +34,7 @@ public class unitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public int JumpStateHash;
     [HideInInspector] public int LandingStateHash;
     [HideInInspector] public int WaitStateHash;
+    [HideInInspector] public int SecondJumpStateHash;
     int unitychanAnimHash;
     int previousHash;
     [HideInInspector] public float unitychanAnimTime;
@@ -42,7 +43,13 @@ public class unitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public GameObject rayColliderObject = null;
     [HideInInspector] public float jumpTime;
     [HideInInspector] public bool IsWallHit;
+    [HideInInspector] public bool IsFloorHit;
+    [HideInInspector] public GameObject otherCollider;
     [HideInInspector] public Vector3? contactPoint;
+    //Android用
+    [HideInInspector] public int touchCount;
+    Touch[] touches;
+    [HideInInspector] public Touch nowTouch;
     //parameter
     [HideInInspector] public float jumpMaxHeightTime = 0.3f;
     [HideInInspector] public float jumpStartTime = 0.2f;
@@ -74,10 +81,19 @@ public class unitychan_CNTRL : MonoBehaviour {
         unitychanAnimHash = currentAnimInfo.fullPathHash;
         unitychanAnimTime = currentAnimInfo.normalizedTime;
         downKeyCode = GetKeyDownCode.getKeyDownCode();
+        touchCount = Input.touchCount;
+        if(touchCount > 0)
+        {
+            touches = Input.touches;
+            nowTouch = touches[touchCount - 1];
+        }
+
         //衝突判定
-        unitychanCollider.MyUpdate();
         IsWallHit = unitychanCollider.IsWallHit;
+        IsFloorHit = unitychanCollider.IsFloorHit;
         contactPoint = unitychanCollider.contactPoint;
+        otherCollider = unitychanCollider.otherCllider;
+        unitychanCollider.MyUpdate(); //変数リセット。OnCollision系が先に実行される
 
         //Script制御(ScriptのPhase遷移)
         if (unitychanAnimHash != previousHash)
@@ -99,6 +115,10 @@ public class unitychan_CNTRL : MonoBehaviour {
             {
 
             }
+            else if(previousHash == SecondJumpStateHash)
+            {
+
+            }
 
             //OnChanged()
             if (unitychanAnimHash == JumpStateHash)
@@ -116,6 +136,10 @@ public class unitychan_CNTRL : MonoBehaviour {
             else if(previousHash == WaitStateHash)
             {
 
+            }
+            else if(previousHash == SecondJumpStateHash)
+            {
+                wallKickPhase.SecondJumpOnChanged();
             }
             //
             previousHash = unitychanAnimHash;
@@ -138,8 +162,10 @@ public class unitychan_CNTRL : MonoBehaviour {
         {
             waitPhase.MyUpdate();
         }
-
-
+        else if(unitychanAnimHash == SecondJumpStateHash)
+        {
+            wallKickPhase.SecondJumpUpdate();
+        }
     }
 
     void Turn()
