@@ -66,6 +66,7 @@ public class testJumpPhase : MonoBehaviour {
         MainCamera = Unitychan_CNTRL.MainCamera;
     }
 
+    //足縮めるまで
     public void ChargeUpOnChanged()
     {
         unitychanRb.useGravity = true;
@@ -85,6 +86,7 @@ public class testJumpPhase : MonoBehaviour {
         unitychanAnimTime = Unitychan_CNTRL.unitychanAnimTime;
     }
 
+    //足伸ばすまで
     public void ReleaseOnChanged()
     {
     }
@@ -94,6 +96,7 @@ public class testJumpPhase : MonoBehaviour {
         //Debug.Log(unitychanAnimTime);
     }
 
+    //空中
     public void InAirOnChanged()
     {
         //必要な変数
@@ -103,6 +106,7 @@ public class testJumpPhase : MonoBehaviour {
         }
         else
         {
+            unitychanRb.useGravity = true;
             unitychanRb.velocity = AddNormalJump();
         }
         jumpElapsedTime = 0f;
@@ -111,6 +115,11 @@ public class testJumpPhase : MonoBehaviour {
         //WallKickMotion入れるか判定
         if (ToWallKick())
         {
+            unitychan_Anim.SetTrigger(ChargeUpTrigger);
+        }
+        else
+        {
+            unitychan_Anim.SetTrigger(RunTrigger);
         }
     }
     public void InAirUpdate()
@@ -120,14 +129,13 @@ public class testJumpPhase : MonoBehaviour {
 
     }
     
+    //着地まで
     public void LandingOnChanged()
     {
         unitychan_Anim.enabled = false;
         if (IsWallKick)
         {
             //unitychan_Anim.enabled = true;
-            Debug.Log("ChargeUpTrigger");
-            unitychan_Anim.SetTrigger(ChargeUpTrigger);
         }
     }
     public void LandingUpdate()
@@ -140,7 +148,6 @@ public class testJumpPhase : MonoBehaviour {
             unitychan_Anim.enabled = true;
             unitychan.transform.up = otherObject.transform.up;
             //Debug.Log("RunTrigger");
-            unitychan_Anim.SetTrigger(RunTrigger);
         }
 
     }

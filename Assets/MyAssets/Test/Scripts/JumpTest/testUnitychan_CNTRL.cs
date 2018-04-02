@@ -144,19 +144,19 @@ public class testUnitychan_CNTRL : MonoBehaviour {
             //Jump
             else if (unitychanAnimHash == ChargeUpHash)
             {
-                //jumpPhase.ChargeUpOnChanged();
+                jumpPhase.ChargeUpOnChanged();
             }
             else if (unitychanAnimHash == InAirHash)
             {
-                //jumpPhase.InAirOnChanged();
+                jumpPhase.InAirOnChanged();
             }
             else if (unitychanAnimHash == LandingHash)
             {
-                //jumpPhase.LandingOnChanged();
+                jumpPhase.LandingOnChanged();
             }
             else if (unitychanAnimHash == ReleaseHash)
             {
-                //jumpPhase.ReleaseOnChanged();
+                jumpPhase.ReleaseOnChanged();
             }
             //
             previousHash = unitychanAnimHash;
@@ -177,22 +177,22 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         else if (unitychanAnimHash == ChargeUpHash)
         {
             Debug.Log(ChargeUpName);
-            //jumpPhase.ChargeUpUpdate();
+            jumpPhase.ChargeUpUpdate();
         }
         else if (unitychanAnimHash == InAirHash)
         {
             Debug.Log(InAirName);
-            //jumpPhase.InAirUpdate();
+            jumpPhase.InAirUpdate();
         }
         else if (unitychanAnimHash == LandingHash)
         {
             Debug.Log(LandingName);
-            //jumpPhase.LandingUpdate();
+            jumpPhase.LandingUpdate();
         }
         else if (unitychanAnimHash == ReleaseHash)
         {
             Debug.Log(ReleaseName);
-            //jumpPhase.ReleaseUpdate();
+            jumpPhase.ReleaseUpdate();
         }
     }
 
