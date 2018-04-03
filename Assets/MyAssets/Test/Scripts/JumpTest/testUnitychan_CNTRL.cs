@@ -70,7 +70,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         //必要な変数
         Unitychan_Initializer = GetComponent<testUnitychan_Initializer>();
         jumpPhase = GetComponent<testJumpPhase>();
-        wallKickPhase = GetComponent<testWallKickPhase>();
+        //wallKickPhase = GetComponent<testWallKickPhase>();
         waitPhase = GetComponent<testWaitPhase>();
         runPhase = GetComponent<testRunPhase>();
 
@@ -78,7 +78,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         Unitychan_Initializer.MyStart();
         unitychan_Forward.MyStart();
         jumpPhase.MyStart();
-        wallKickPhase.MyStart();
+        //wallKickPhase.MyStart();
         waitPhase.MyStart();
         runPhase.MyStart();
 
@@ -166,33 +166,33 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         //MyUpdate()
         if (unitychanAnimHash == WaitStateHash)
         {
-            Debug.Log(WaitName);
+            //Debug.Log(WaitName);
             waitPhase.MyUpdate();
         }
         else if (unitychanAnimHash == RunStateHash)
         {
-            Debug.Log(RunName);
+            //Debug.Log(RunName);
             runPhase.MyUpdate();
         }
         //Jump
         else if (unitychanAnimHash == ChargeUpHash)
         {
-            Debug.Log(ChargeUpName);
+            //Debug.Log(ChargeUpName);
             jumpPhase.ChargeUpUpdate();
         }
         else if (unitychanAnimHash == InAirHash)
         {
-            Debug.Log(InAirName);
+            //Debug.Log(InAirName);
             jumpPhase.InAirUpdate();
         }
         else if (unitychanAnimHash == LandingHash)
         {
-            Debug.Log(LandingName);
+            //Debug.Log(LandingName);
             jumpPhase.LandingUpdate();
         }
         else if (unitychanAnimHash == ReleaseHash)
         {
-            Debug.Log(ReleaseName);
+            //Debug.Log(ReleaseName);
             jumpPhase.ReleaseUpdate();
         }
     }

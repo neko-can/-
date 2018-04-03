@@ -24,6 +24,7 @@ public class testUnitychanCollider : MonoBehaviour {
     private void OnCollisionStay(Collision collision)
     {
         otherCllider = collision.gameObject;
+        Debug.Log(otherCllider.name);
         if (otherCllider.transform.parent.name == "Walls")
         {
             IsWallHit = true;

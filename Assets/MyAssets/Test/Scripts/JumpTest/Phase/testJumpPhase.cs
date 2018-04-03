@@ -47,10 +47,10 @@ public class testJumpPhase : MonoBehaviour {
     float stopPosMinNormTime = 0.4f;
     float rayStopNormTime = 0.5f;
     //parameter
-    float firstVelocityY = 5f;
-    float firstVelocityF = 7f;
-    float wallKickVelocityF = 7f;
-    float wallKickVelocityUp = 3f;
+    float firstVelocityY = 2f;
+    float firstVelocityF = 2f;
+    float wallKickVelocityF = 2f;
+    float wallKickVelocityUp = 2f;
     float wallKickMaxTime = 1f;
 
     public void MyStart()
@@ -132,6 +132,7 @@ public class testJumpPhase : MonoBehaviour {
         {
             unitychanRb.useGravity = true;
             unitychanRb.velocity = AddNormalJump();
+            Debug.Log(unitychanRb.velocity);
             unitychan_Anim.SetTrigger(RunTrigger);
         }
     }
@@ -156,10 +157,13 @@ public class testJumpPhase : MonoBehaviour {
         IsFloorHit = Unitychan_CNTRL.IsFloorHit;
         IsWallHit = Unitychan_CNTRL.IsWallHit;
         otherObject = Unitychan_CNTRL.otherCollider;
-        Debug.Log(IsWallHit);
+        Debug.Log(IsFloorHit);
         if(IsFloorHit)
         {
-            unitychan_Anim.enabled = true;
+            if(unitychan_Anim.enabled == false)
+            {
+                unitychan_Anim.enabled = true;
+            }
             //Debug.Log("RunTrigger");
         }
         if (IsWallKick)

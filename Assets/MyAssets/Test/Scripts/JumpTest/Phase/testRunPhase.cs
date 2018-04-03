@@ -14,7 +14,7 @@ public class testRunPhase : MonoBehaviour {
     string jumpTrigger;
     GameObject otherObject;
     //parameter
-    float runningSpeed = 3f;
+    float runningSpeed = 1f;
 
     public void MyStart()
     {
