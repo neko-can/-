@@ -11,8 +11,9 @@ public class game_CNTRL_Initializer : MonoBehaviour {
         Game_CNTRL = GetComponent<game_CNTRL>();
         Game_CNTRL.cntrls = transform.parent.gameObject.GetComponent<CNTRLs>();
         Game_CNTRL.unitychan = Game_CNTRL.cntrls.unitychan;
-        Game_CNTRL.startPoint = Game_CNTRL.MapInScene.transform.Find("Pointers/startPoint").gameObject;
-        Game_CNTRL.StartPointDirection = Game_CNTRL.MapInScene.transform.Find("Pointers/StartPointDirection").gameObject;
+        Debug.Log(Game_CNTRL.MapInScene.name);
+        Game_CNTRL.startPoint = Game_CNTRL.MapInScene.transform.Find("Pointers/StartArea").gameObject;
+        Game_CNTRL.StartPointDirection = Game_CNTRL.MapInScene.transform.Find("Pointers/StartDirection").gameObject;
         Game_CNTRL.MainCamera = GameObject.Find("Player/Main Camera");
         Game_CNTRL.Player = GameObject.Find("Player");
     }
