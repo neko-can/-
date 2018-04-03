@@ -16,6 +16,7 @@ public class game_CNTRL : MonoBehaviour {
     [HideInInspector] public GameObject Player;
     //script
     game_CNTRL_Initializer Game_CNTRL_Initializer;
+    [HideInInspector] public DeadArea deadArea;
     //phase
     StartPhase startPhase;
 
