@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33034655326683406}
   - component: {fileID: 65766681988394558}
   - component: {fileID: 23012261789128428}
+  - component: {fileID: 114837139337249618}
+  - component: {fileID: 54447699185123302}
   m_Layer: 0
   m_Name: WallPiece
   m_TagString: Untagged
@@ -83,6 +85,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1370048759402056}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54447699185123302
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1370048759402056}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!65 &65766681988394558
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -95,3 +112,14 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114837139337249618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1370048759402056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3212aa97dea3045a2933849478ee4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

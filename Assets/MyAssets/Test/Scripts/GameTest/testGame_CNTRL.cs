@@ -16,10 +16,16 @@ public class testGame_CNTRL : MonoBehaviour {
     [HideInInspector] public GameObject Player;
     [HideInInspector] public GameObject DeadEnterObj;
     [HideInInspector] public bool IsOnEnterDeadArea;
+    [HideInInspector] public GameObject GoalEnterObj;
+    [HideInInspector] public bool IsOnEnterGoalArea;
+    [HideInInspector] public Animator unitychanAnim;
     //script
     testGame_CNTRL_Initializer Game_CNTRL_Initializer;
     [HideInInspector] public DeadArea deadArea;
+    [HideInInspector] public GoalArea goalArea;
     testGameAdvance gameAdvance;
+    testTimer timer;
+    ToPushButton toPushButton;
     //phase
     testStartPhase startPhase;
 
@@ -32,19 +38,30 @@ public class testGame_CNTRL : MonoBehaviour {
         //phase
         startPhase = GetComponent<testStartPhase>();
         gameAdvance = GetComponent<testGameAdvance>();
+        timer = GetComponent<testTimer>();
+        toPushButton = GetComponent<ToPushButton>();
         gameAdvance.MyStart();
         startPhase.MyStart();
+        timer.MyStart();
+        toPushButton.MyStart();
     }
 
     private void Update()
     {
         //衝突判定
+        //DeadArea
         DeadEnterObj = deadArea.DeadEnterObj;
         IsOnEnterDeadArea = deadArea.IsOnEnterDeadArea;
         deadArea.MyUpdate();
+        //GoalArea
+        GoalEnterObj = goalArea.GoalEnterObj;
+        IsOnEnterGoalArea = goalArea.IsOnEnterGoalArea;
+        goalArea.MyUpdate();
 
         //処理
         gameAdvance.MyUpdate();
+        timer.MyUpdate();
+        toPushButton.MyUpdate();
     }
 
 }

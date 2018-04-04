@@ -118,7 +118,6 @@ public class testJumpPhase : MonoBehaviour {
     public void InAirOnChanged()
     {
         //必要な変数
-        Debug.Log(MainCamera.transform.forward);
         AddVelocity = AddWallKickJump(); //加える速度の初期値
         ToWallKick(); //WallKickやるか計算
 
@@ -157,15 +156,6 @@ public class testJumpPhase : MonoBehaviour {
         IsFloorHit = Unitychan_CNTRL.IsFloorHit;
         IsWallHit = Unitychan_CNTRL.IsWallHit;
         otherObject = Unitychan_CNTRL.otherCollider;
-        Debug.Log(IsFloorHit);
-        if(IsFloorHit)
-        {
-            if(unitychan_Anim.enabled == false)
-            {
-                unitychan_Anim.enabled = true;
-            }
-            //Debug.Log("RunTrigger");
-        }
         if (IsWallKick)
         {
             if (IsFloorHit)
@@ -177,6 +167,17 @@ public class testJumpPhase : MonoBehaviour {
                 Debug.Log(rayOtherObject.transform.forward);
                 unitychan.transform.up = rayOtherObject.transform.forward;
                 unitychan_Anim.enabled = true;
+            }
+        }
+        else
+        {
+            if (IsFloorHit)
+            {
+                if (unitychan_Anim.enabled == false)
+                {
+                    unitychan_Anim.enabled = true;
+                }
+                //Debug.Log("RunTrigger");
             }
         }
 
@@ -217,7 +218,7 @@ public class testJumpPhase : MonoBehaviour {
         if (Physics.Raycast(ray, out raycastHit, Vector3.Distance(rayPos, rayStartPos)))
         {
             Debug.Log(raycastHit.collider.name);
-            if(raycastHit.collider.gameObject.transform.parent.name == "Walls" && raycastHit.collider.gameObject != rayPreviousObject)
+            if(raycastHit.collider.gameObject.transform.parent.name == "Walls")
             {
                 rayOtherObject = raycastHit.collider.gameObject;
                 IsWallKick = true;
@@ -234,7 +235,7 @@ public class testJumpPhase : MonoBehaviour {
         previouseKick = IsWallKick;
 
         //rayの視覚化
-        rayClone = GameObject.Instantiate(rayObject);
-        rayClone.transform.position = rayPos;
+        //rayClone = GameObject.Instantiate(rayObject);
+        //rayClone.transform.position = rayPos;
     }
 }

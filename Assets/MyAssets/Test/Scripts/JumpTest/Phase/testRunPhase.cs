@@ -57,7 +57,8 @@ public class testRunPhase : MonoBehaviour {
     public void OnChanged()
     {
         otherObject = Unitychan_CNTRL.otherCollider;
-        if(unitychan.transform.up != otherObject.transform.up)
+        Debug.Log(otherObject);
+        if (unitychan.transform.up != otherObject.transform.up)
         {
             unitychan.transform.up = otherObject.transform.up;
         }

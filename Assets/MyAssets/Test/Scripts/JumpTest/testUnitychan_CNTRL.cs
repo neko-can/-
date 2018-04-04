@@ -100,12 +100,12 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         }
 
         //衝突判定
-        IsWallHit = unitychanCollider.IsWallHit;
-        IsFloorHit = unitychanCollider.IsFloorHit;
-        contactPoint = unitychanCollider.contactPoint;
-        otherCollider = unitychanCollider.otherCllider;
-        Debug.Log(otherCollider);
-        unitychanCollider.MyUpdate(); //変数リセット。OnCollision系が先に実行される
+        //IsWallHit = unitychanCollider.IsWallHit;
+        //IsFloorHit = unitychanCollider.IsFloorHit;
+        //contactPoint = unitychanCollider.contactPoint;
+        //otherCollider = unitychanCollider.otherCllider;
+        //Debug.Log(otherCollider);
+        //unitychanCollider.MyUpdate(); //変数リセット。OnCollision系が先に実行される
 
         //Script制御(ScriptのPhase遷移)
         if (unitychanAnimHash != previousHash)
@@ -196,6 +196,9 @@ public class testUnitychan_CNTRL : MonoBehaviour {
             //Debug.Log(ReleaseName);
             jumpPhase.ReleaseUpdate();
         }
+
+        IsWallHit = false;
+        IsFloorHit = false;
     }
 
 }
