@@ -48,10 +48,10 @@ public class testJumpPhase : MonoBehaviour {
     float rayStopNormTime = 0.5f;
     //parameter
     float firstVelocityY = 3f;
-    float firstVelocityF = 2f;
-    float wallKickVelocityF = 1.5f;
+    float firstVelocityF = 5f;
+    float wallKickVelocityF = 3f;
     float wallKickVelocityUp = 1f;
-    float wallKickMaxTime = 1f;
+    float wallKickMaxTime = 0.5f;
 
     public void MyStart()
     {
@@ -118,6 +118,7 @@ public class testJumpPhase : MonoBehaviour {
     public void InAirOnChanged()
     {
         //必要な変数
+        Debug.Log(MainCamera.transform.forward);
         AddVelocity = AddWallKickJump(); //加える速度の初期値
         ToWallKick(); //WallKickやるか計算
 
@@ -185,7 +186,8 @@ public class testJumpPhase : MonoBehaviour {
     {
         AddLocalVelocity = unitychanRb.velocity;
         //AddLocalVelocity += unitychan.transform.forward * firstVelocityF + new Vector3(0, firstVelocityY);
-        AddLocalVelocity += new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z) * firstVelocityF + MainCamera.transform.up * firstVelocityY;
+        //AddLocalVelocity += new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z) * firstVelocityF + MainCamera.transform.up * firstVelocityY;
+        AddLocalVelocity += MainCamera.transform.forward * firstVelocityF;
 
         jumpFullTime = Mathf.Abs(2 * AddLocalVelocity.y / Physics.gravity.y);
         return AddLocalVelocity;
@@ -194,7 +196,8 @@ public class testJumpPhase : MonoBehaviour {
     public Vector3 AddWallKickJump()
     {
         //AddLocalVelocity = MainCamera.transform.forward * wallKickVelocityF + MainCamera.transform.up * wallKickVelocityUp;
-        AddLocalVelocity = new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z) * wallKickVelocityF + MainCamera.transform.up * wallKickVelocityUp;
+        //AddLocalVelocity = new Vector3(MainCamera.transform.forward.x, 0, MainCamera.transform.forward.z) * wallKickVelocityF + MainCamera.transform.up * wallKickVelocityUp;
+        AddLocalVelocity = MainCamera.transform.forward * wallKickVelocityF;
 
         return AddLocalVelocity;
     }

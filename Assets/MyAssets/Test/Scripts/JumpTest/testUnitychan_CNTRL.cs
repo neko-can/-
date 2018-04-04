@@ -104,6 +104,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         IsFloorHit = unitychanCollider.IsFloorHit;
         contactPoint = unitychanCollider.contactPoint;
         otherCollider = unitychanCollider.otherCllider;
+        Debug.Log(otherCollider);
         unitychanCollider.MyUpdate(); //変数リセット。OnCollision系が先に実行される
 
         //Script制御(ScriptのPhase遷移)
