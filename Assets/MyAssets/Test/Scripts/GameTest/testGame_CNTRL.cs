@@ -5,7 +5,7 @@ using UnityEngine;
 public class testGame_CNTRL : MonoBehaviour {
 
     //ソース
-    [HideInInspector] public CNTRLs cntrls;
+    [HideInInspector] public testCNTRLs cntrls;
     //必要な変数
     [HideInInspector] public GameObject unitychan;
     public GameObject MapInScene;
@@ -19,6 +19,7 @@ public class testGame_CNTRL : MonoBehaviour {
     [HideInInspector] public GameObject GoalEnterObj;
     [HideInInspector] public bool IsOnEnterGoalArea;
     [HideInInspector] public Animator unitychanAnim;
+    [HideInInspector] public float ClearTime;
     //script
     testGame_CNTRL_Initializer Game_CNTRL_Initializer;
     [HideInInspector] public DeadArea deadArea;
@@ -28,6 +29,10 @@ public class testGame_CNTRL : MonoBehaviour {
     ToPushButton toPushButton;
     //phase
     testStartPhase startPhase;
+    //Animator
+    [HideInInspector] public int unitychanAnimHash;
+    [HideInInspector] public int WaitStateHash;
+    [HideInInspector] public string WaitName;
 
 
     private void Start()
@@ -48,6 +53,10 @@ public class testGame_CNTRL : MonoBehaviour {
 
     private void Update()
     {
+        //必要な変数
+        //Animator
+        unitychanAnimHash = cntrls.unitychanAnimHash;
+
         //衝突判定
         //DeadArea
         DeadEnterObj = deadArea.DeadEnterObj;

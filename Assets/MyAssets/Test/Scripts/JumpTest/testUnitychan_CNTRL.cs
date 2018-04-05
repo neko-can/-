@@ -12,14 +12,13 @@ public class testUnitychan_CNTRL : MonoBehaviour {
 
     //必要な変数
     //souce
-    [HideInInspector] public CNTRLs cntrls;
+    [HideInInspector] public testCNTRLs cntrls;
     //script
     [HideInInspector] public testUnitychan_forward unitychan_Forward;
     [HideInInspector] public testUnitychanCollider unitychanCollider;
     //phase
     testUnitychan_Initializer Unitychan_Initializer;
     testJumpPhase jumpPhase;
-    testWallKickPhase wallKickPhase;
     testWaitPhase waitPhase;
     testRunPhase runPhase;
     //variable
@@ -28,20 +27,20 @@ public class testUnitychan_CNTRL : MonoBehaviour {
     [HideInInspector] public Rigidbody unitychanRb;
     [HideInInspector] public GameObject MainCamera;
     //Animator
-    [HideInInspector] public string BaseLayerName = "Base Layer";
+    [HideInInspector] public string BaseLayerName;
     AnimatorStateInfo currentAnimInfo;
-    [HideInInspector] public string RunName = "Run";
-    [HideInInspector] public string WaitName = "Wait";
+    [HideInInspector] public string RunName;
+    [HideInInspector] public string WaitName;
     [HideInInspector] public int RunStateHash;
     [HideInInspector] public int WaitStateHash;
     int unitychanAnimHash;
     int previousHash;
     [HideInInspector] public float unitychanAnimTime;
     //Jump
-    [HideInInspector] public string ChargeUpName = "ChargeUp";
-    [HideInInspector] public string LandingName = "Landing";
-    [HideInInspector] public string ReleaseName = "Release";
-    [HideInInspector] public string InAirName = "InAir";
+    [HideInInspector] public string ChargeUpName;
+    [HideInInspector] public string LandingName ;
+    [HideInInspector] public string ReleaseName;
+    [HideInInspector] public string InAirName;
     [HideInInspector] public int ChargeUpHash;
     [HideInInspector] public int LandingHash;
     [HideInInspector] public int ReleaseHash;
@@ -70,7 +69,6 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         //必要な変数
         Unitychan_Initializer = GetComponent<testUnitychan_Initializer>();
         jumpPhase = GetComponent<testJumpPhase>();
-        //wallKickPhase = GetComponent<testWallKickPhase>();
         waitPhase = GetComponent<testWaitPhase>();
         runPhase = GetComponent<testRunPhase>();
 
@@ -78,7 +76,6 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         Unitychan_Initializer.MyStart();
         unitychan_Forward.MyStart();
         jumpPhase.MyStart();
-        //wallKickPhase.MyStart();
         waitPhase.MyStart();
         runPhase.MyStart();
 
@@ -90,6 +87,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
         //変数用意
         currentAnimInfo = unitychan_Anim.GetCurrentAnimatorStateInfo(0);
         unitychanAnimHash = currentAnimInfo.fullPathHash;
+        cntrls.unitychanAnimHash = unitychanAnimHash;
         unitychanAnimTime = currentAnimInfo.normalizedTime;
         downKeyCode = GetKeyDownCode.getKeyDownCode();
         touchCount = Input.touchCount;

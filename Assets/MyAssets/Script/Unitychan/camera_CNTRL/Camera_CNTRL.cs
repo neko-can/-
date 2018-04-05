@@ -5,7 +5,7 @@ using UnityEngine;
 public class Camera_CNTRL : MonoBehaviour {
 
     //source
-    [HideInInspector] public CNTRLs cntrls;
+    [HideInInspector] public testCNTRLs cntrls;
     //script_set
     Camera_CNTRL_Initializer camera_CNTRL_Initializer;
     //script
@@ -20,7 +20,7 @@ public class Camera_CNTRL : MonoBehaviour {
 	void Start () {
         //必要な変数
         //source
-        cntrls = transform.parent.GetComponent<CNTRLs>();
+        cntrls = transform.parent.GetComponent<testCNTRLs>();
         //script_set
         camera_CNTRL_Initializer = GetComponent<Camera_CNTRL_Initializer>();
 

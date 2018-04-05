@@ -8,7 +8,7 @@ public class testBarometer : MonoBehaviour {
     //CNTRL間をまたぐからCNTRLsに付与
 
     //source
-    CNTRLs cntrls;
+    testCNTRLs cntrls;
     //variable
     public GameObject sizeBarometer;
     Vector3 BarometerSize;
@@ -20,7 +20,7 @@ public class testBarometer : MonoBehaviour {
 
     public void MyStart()
     {
-        cntrls = GetComponent<CNTRLs>();
+        cntrls = GetComponent<testCNTRLs>();
 
         BarometerSize = sizeBarometer.transform.lossyScale;
         cntrls.unitychan.transform.localScale = BarometerSize;

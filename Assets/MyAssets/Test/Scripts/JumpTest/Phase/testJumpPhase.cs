@@ -48,7 +48,7 @@ public class testJumpPhase : MonoBehaviour {
     float rayStopNormTime = 0.5f;
     //parameter
     float firstVelocityY = 3f;
-    float firstVelocityF = 5f;
+    float firstVelocityF = 3f;
     float wallKickVelocityF = 3f;
     float wallKickVelocityUp = 1f;
     float wallKickMaxTime = 0.5f;

@@ -19,7 +19,7 @@ public class testUnitychan_Initializer : MonoBehaviour {
         //target
         Unitychan_CNTRL = GetComponent<testUnitychan_CNTRL>();
         //souce
-        Unitychan_CNTRL.cntrls = transform.parent.gameObject.GetComponent<CNTRLs>();
+        Unitychan_CNTRL.cntrls = transform.parent.gameObject.GetComponent<testCNTRLs>();
         //variable
         Unitychan_CNTRL.unitychan = Unitychan_CNTRL.cntrls.unitychan;
         Unitychan_CNTRL.MainCamera = GameObject.Find("Player/Main Camera");
@@ -28,20 +28,20 @@ public class testUnitychan_Initializer : MonoBehaviour {
         Unitychan_CNTRL.unitychanCollider = Unitychan_CNTRL.unitychan.GetComponent<testUnitychanCollider>();
         Unitychan_CNTRL.unitychan_Forward = GetComponent<testUnitychan_forward>();
         //Animator
-        BaseLayerName = Unitychan_CNTRL.BaseLayerName;
-        RunName = Unitychan_CNTRL.RunName;
-        WaitName = Unitychan_CNTRL.WaitName;
+        BaseLayerName = Unitychan_CNTRL.cntrls.BaseLayerName;
+        RunName = Unitychan_CNTRL.cntrls.RunName;
+        WaitName = Unitychan_CNTRL.cntrls.WaitName;
         Unitychan_CNTRL.unitychan_Anim = Unitychan_CNTRL.unitychan.GetComponent<Animator>();
-        Unitychan_CNTRL.RunStateHash = Animator.StringToHash(BaseLayerName + "." + RunName);
-        Unitychan_CNTRL.WaitStateHash = Animator.StringToHash(BaseLayerName + "." + WaitName);
+        Unitychan_CNTRL.RunStateHash = Unitychan_CNTRL.cntrls.RunStateHash;
+        Unitychan_CNTRL.WaitStateHash = Unitychan_CNTRL.cntrls.WaitStateHash;
         //Jump
-        ChargeUpName = Unitychan_CNTRL.ChargeUpName;
-        LandingName = Unitychan_CNTRL.LandingName;
-        ReleaseName = Unitychan_CNTRL.ReleaseName;
-        InAirName = Unitychan_CNTRL.InAirName;
-        Unitychan_CNTRL.ChargeUpHash = Animator.StringToHash(BaseLayerName + "." + ChargeUpName);
-        Unitychan_CNTRL.LandingHash = Animator.StringToHash(BaseLayerName + "." + LandingName);
-        Unitychan_CNTRL.ReleaseHash = Animator.StringToHash(BaseLayerName + "." + ReleaseName);
-        Unitychan_CNTRL.InAirHash = Animator.StringToHash(BaseLayerName + "." + InAirName);
+        ChargeUpName = Unitychan_CNTRL.cntrls.ChargeUpName;
+        LandingName = Unitychan_CNTRL.cntrls.LandingName;
+        ReleaseName = Unitychan_CNTRL.cntrls.ReleaseName;
+        InAirName = Unitychan_CNTRL.cntrls.InAirName;
+        Unitychan_CNTRL.ChargeUpHash = Unitychan_CNTRL.cntrls.ChargeUpHash;
+        Unitychan_CNTRL.LandingHash = Unitychan_CNTRL.cntrls.LandingHash;
+        Unitychan_CNTRL.ReleaseHash = Unitychan_CNTRL.cntrls.ReleaseHash;
+        Unitychan_CNTRL.InAirHash = Unitychan_CNTRL.cntrls.InAirHash;
     }
 }

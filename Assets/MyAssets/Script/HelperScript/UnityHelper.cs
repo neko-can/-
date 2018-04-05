@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnityHelper : MonoBehaviour {
 
@@ -83,6 +84,60 @@ namespace unityHelper
         {
             onChanged();
             mainDelegate = new MainDelegate(myUpdate);
+        }
+    }
+
+    public class MyFade
+    {
+        float transTime;
+        float outElapsedTime;
+        float inElapsedTime;
+        float inStopper = 0f;
+        float outStopper = 0f;
+        bool IsInFadeOut = false;
+        Image image;
+        Color color;
+        public MyFade(Image MyFadeImage, Color MyFadeColor, float transitionTime=1f)
+        {
+            transTime = transitionTime;
+            image = MyFadeImage;
+            color = MyFadeColor;
+            outElapsedTime = 0f;
+            inElapsedTime = transTime;
+        }
+
+        public void MyFadeOut()
+        {
+            if(outStopper < transTime)
+            {
+                //初期化
+                inStopper = 0f;
+                inElapsedTime = transTime;
+                IsInFadeOut = true;
+
+                outElapsedTime += Time.deltaTime;
+                color.a = outElapsedTime / transTime; //script上では0~1で制御
+                image.color = color;
+            }
+            outStopper += Time.deltaTime;
+        }
+
+        public void MyFadeIn()
+        {
+            if (!IsInFadeOut)
+            {
+                if (inStopper < transTime)
+                {
+                    //初期化
+                    outStopper = 0f;
+                    outElapsedTime = 0f;
+
+                    inElapsedTime -= Time.deltaTime;
+                    color.a = inElapsedTime / transTime;
+                    image.color = color;
+                }
+                inStopper += Time.deltaTime;
+            }
         }
     }
 
