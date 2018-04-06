@@ -35,6 +35,9 @@ public class testCNTRLs_Initializer : MonoBehaviour {
         cntrls.LandingHash = Animator.StringToHash(BaseLayerName + "." + LandingName);
         cntrls.ReleaseHash = Animator.StringToHash(BaseLayerName + "." + ReleaseName);
         cntrls.InAirHash = Animator.StringToHash(BaseLayerName + "." + InAirName);
+        //script
+        cntrls.unitychanVoice = GetComponent<testUnitychanVoice>();
+        cntrls.unitychanVoice.MyStart();
     }
 
 }

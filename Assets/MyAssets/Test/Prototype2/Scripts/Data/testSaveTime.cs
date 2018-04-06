@@ -19,6 +19,7 @@ public class testSaveTime : MonoBehaviour {
     string nameText;
     string defaultName = "名無し";
     //保存する情報
+    DateTime nowTime;
     string PlayerName;
     string PlayerListKey = "PlayerList";
     SaveTime saveTime;
@@ -30,7 +31,7 @@ public class testSaveTime : MonoBehaviour {
     string titleSceneName = "Title";
     float outTimeElapsed = 0f;
     //parameter
-    int MaxListRange = 20;
+    [HideInInspector] public static int MaxListRange = 60;
     float ListInterval = 50f;
     float transitionTime = 1f;
 
@@ -38,6 +39,10 @@ public class testSaveTime : MonoBehaviour {
     {
         //PlayerListのロード & 初期設定
         savePlayerList = SaveData.GetClass<SavePlayerList>(PlayerListKey, new SavePlayerList());
+        if(savePlayerList.playerList.Count != MaxListRange)
+        {
+            savePlayerList = new SavePlayerList();
+        }
         defaultName += savePlayerList.NoPlayer.ToString();
         //UI表示
         ShowData();
@@ -73,18 +78,23 @@ public class testSaveTime : MonoBehaviour {
             PlayerName = nameText;
         }
         //savetime
+        nowTime = DateTime.Now;
         saveTime = new SaveTime();
         saveTime.PlayerName = PlayerName;
         saveTime.ClearTime = SendData.ClearTime;
+        saveTime.StageName = SendData.StageName;
+        saveTime.SaveDate = new int[] {nowTime.Year, nowTime.Month, nowTime.Day, nowTime.Hour, nowTime.Minute, nowTime.Second };//年、月、日、時、分、秒
         //playerlist
-        savePlayerList.NoPlayer++;
         savePlayerList.ListIndex = savePlayerList.NoPlayer % MaxListRange;
+        savePlayerList.NoPlayer++;
         savePlayerList.playerList[savePlayerList.ListIndex] = PlayerName;
+        savePlayerList.addKey[savePlayerList.ListIndex] = nowTime.ToString();
         //保存
-        SaveData.SetClass<SaveTime>(PlayerName, saveTime);
+        SaveData.SetClass<SaveTime>(PlayerName + savePlayerList.addKey[savePlayerList.ListIndex], saveTime);
         SaveData.SetClass<SavePlayerList>(PlayerListKey, savePlayerList);
+        SaveData.Save();
         //チェック
-        SaveTime checkData = SaveData.GetClass<SaveTime>(PlayerName, new SaveTime());
+        SaveTime checkData = SaveData.GetClass<SaveTime>(PlayerName + savePlayerList.addKey[savePlayerList.ListIndex], new SaveTime());
         SavePlayerList checkList = SaveData.GetClass<SavePlayerList>(PlayerListKey, new SavePlayerList());
         Debug.Log(checkData.PlayerName);
         Debug.Log(checkList.ListIndex);
@@ -99,7 +109,9 @@ public class testSaveTime : MonoBehaviour {
         //Dataの一覧表を作る
         SavePlayerList savePlayerList = SaveData.GetClass<SavePlayerList>(PlayerListKey, new SavePlayerList());
         List<string> PlayerList;
+        List<string> addKey;
         PlayerList = savePlayerList.playerList;
+        addKey = savePlayerList.addKey;
         double hour;
         double minute;
         double second;
@@ -112,7 +124,7 @@ public class testSaveTime : MonoBehaviour {
             listModelClone.GetComponent<RectTransform>().anchoredPosition = modelPos;
 
             //text部分
-            SaveTime cloneData = SaveData.GetClass<SaveTime>(PlayerList[i], new SaveTime());
+            SaveTime cloneData = SaveData.GetClass<SaveTime>(PlayerList[i] + addKey[i], new SaveTime());
             minute = Math.Floor(cloneData.ClearTime / 60);
             hour = Math.Floor(minute / 60);
             second = cloneData.ClearTime % 60;
@@ -134,8 +146,8 @@ public class SaveTime
 {
     public string PlayerName = "保存されていない";
     public string StageName = "デバック用";
-    public float ClearTime = 0f;
-    public int[] SaveDate = new int[] { 0, 0, 0, 0, 0, 0}; //年、月、日、時、分、秒
+    public float ClearTime = 9999f;
+    public int[] SaveDate = new int[6]; 
 
     public SaveTime()
     {
@@ -151,14 +163,24 @@ public class SaveTime
 public class SavePlayerList
 {
     public List<string> playerList = new List<string>();
+    public List<string> addKey = new List<string>();
     public int ListIndex;
     public int NoPlayer;
+
+    public SavePlayerList()
+    {
+        for (int i=0; i<testSaveTime.MaxListRange; i++)
+        {
+            playerList.Add("データなし");
+            addKey.Add(DateTime.Now.ToString());
+        }
+    }
 }
 
 public class SendData
 {
-    public static float ClearTime = 0;
-    public static string StageName;
+    public static float ClearTime = 9999f;
+    public static string StageName = "ステージ名";
 
     public static void SetClearTime(SaveTime saveTime)
     {

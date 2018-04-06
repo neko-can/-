@@ -11,7 +11,7 @@ public class ViewerForRunning : MonoBehaviour {
     public GameObject TargetObject;
     GameObject MainCamera;
     //parameter
-    float distance = 1f;
+    float distance = 0.8f;
 
     public void MyStart()
     {

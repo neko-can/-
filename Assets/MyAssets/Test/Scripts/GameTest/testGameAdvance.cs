@@ -27,8 +27,10 @@ public class testGameAdvance : MonoBehaviour {
     MyFade myFade;
     bool IsToRecodeScene = false;
     string recodeSceneName = "Recode";
+    string XRtoSceneName = "XRtoNotXR";
     float ClearTime;
     float outTimeElapsed = 0f;
+    Scene nowActiveScene;
 
     public void MyStart()
     {
@@ -40,6 +42,8 @@ public class testGameAdvance : MonoBehaviour {
         unitychanRb = unitychan.GetComponent<Rigidbody>();
         StartPointDirection = Game_CNTRL.StartPointDirection;
         myFade = new MyFade(FadeImage, FadeColor, transitionTime);
+        //Voice
+        UnitychanVoiceStatic.OnLoad();
     }
 
     public void MyUpdate()
@@ -56,6 +60,7 @@ public class testGameAdvance : MonoBehaviour {
             unitychan.transform.forward = StartPointDirection.transform.forward;
             unitychanAnim.SetTrigger(WaitName);
             unitychanRb.velocity = Vector3.zero;
+            UnitychanVoiceStatic.Restart();
         }
         //GoalArea
         GoalEnterObj = Game_CNTRL.GoalEnterObj;
@@ -65,6 +70,10 @@ public class testGameAdvance : MonoBehaviour {
             IsToRecodeScene = true;
             ClearTime = Game_CNTRL.ClearTime;
             SendData.ClearTime = ClearTime;
+            nowActiveScene = SceneManager.GetActiveScene();
+            SendData.StageName = nowActiveScene.name;
+            //Voice
+            UnitychanVoiceStatic.OnGoal();
         }
         //TestGoal
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -72,6 +81,9 @@ public class testGameAdvance : MonoBehaviour {
             IsToRecodeScene = true;
             ClearTime = Game_CNTRL.ClearTime;
             SendData.ClearTime = ClearTime;
+            nowActiveScene = SceneManager.GetActiveScene();
+            SendData.StageName = nowActiveScene.name;
+            UnitychanVoiceStatic.OnGoal();
         }
         //ToRecodeScene
         if (IsToRecodeScene)
@@ -86,7 +98,8 @@ public class testGameAdvance : MonoBehaviour {
         myFade.MyFadeOut();
         if(outTimeElapsed > transitionTime)
         {
-            SceneManager.LoadScene(recodeSceneName);
+            XRAdvance.NextSceneName = recodeSceneName;
+            SceneManager.LoadScene(XRtoSceneName);
         }
     }
 

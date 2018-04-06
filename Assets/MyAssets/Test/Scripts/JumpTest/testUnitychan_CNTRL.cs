@@ -140,6 +140,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
             else if (unitychanAnimHash == RunStateHash)
             {
                 runPhase.OnChanged();
+                UnitychanVoiceStatic.OnRunning();
             }
             //Jump
             else if (unitychanAnimHash == ChargeUpHash)
@@ -157,6 +158,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
             else if (unitychanAnimHash == ReleaseHash)
             {
                 jumpPhase.ReleaseOnChanged();
+                UnitychanVoiceStatic.OnJump();
             }
             //
             previousHash = unitychanAnimHash;

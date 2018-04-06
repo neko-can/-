@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class ShowClearTime : MonoBehaviour {
 
     public GameObject YourTimeTextObj;
+    public GameObject SceneNameTextObj;
     string yourTimeText;
+    string sceneNameText;
     float yourTime;
     double hour;
     double minute;
@@ -21,8 +23,10 @@ public class ShowClearTime : MonoBehaviour {
         hour = Math.Floor(minute / 60);
         second = yourTime % 60;
         yourTimeText = "記録 : " + hour.ToString("00") + ":" + minute.ToString("00") + ":" + second.ToString("00");
+        sceneNameText = SendData.StageName;
 
         YourTimeTextObj.GetComponent<Text>().text = yourTimeText;
+        SceneNameTextObj.GetComponent<Text>().text = sceneNameText;
     }
 
     public void MyUpdate()

@@ -8,6 +8,8 @@ public class testCNTRLs : MonoBehaviour {
 
     //scriptSet
     testCNTRLs_Initializer cntrls_Initializer;
+    //script
+    [HideInInspector] public testUnitychanVoice unitychanVoice;
     //variable
     public GameObject unitychan;
     [HideInInspector] public GameObject Player;

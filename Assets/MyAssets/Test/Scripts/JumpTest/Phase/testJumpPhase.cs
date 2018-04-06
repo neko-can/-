@@ -222,8 +222,6 @@ public class testJumpPhase : MonoBehaviour {
             {
                 rayOtherObject = raycastHit.collider.gameObject;
                 IsWallKick = true;
-                //Debug.Log("RayHit");
-                Debug.Log(rayOtherObject.name);
                 rayPreviousObject = rayOtherObject;
                 rayContactPoint = raycastHit.point;
             }
