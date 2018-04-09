@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SceneList : MonoBehaviour {
 
 
-    public Scene[] raceScenes;
+    public string[] raceScenes;
     public GameObject ListTextModel;
     public GameObject ViewContent;
     SavePlayerList savePlayerList;
@@ -29,7 +30,7 @@ public class SceneList : MonoBehaviour {
         playerList = savePlayerList.playerList;
         for (int i=0; i<raceScenes.Length; i++)
         {
-            raceList.Add(raceScenes[i].name);
+            raceList.Add(raceScenes[i]);
             showText.Add(new List<string>());
         }
 
@@ -51,6 +52,7 @@ public class SceneList : MonoBehaviour {
             second = oneData.ClearTime % 60;
 
             stageIndex = raceList.IndexOf(oneData.StageName);
+            Debug.Log(oneData.StageName);
             if(stageIndex != -1)
             {
                 showText[stageIndex].Add(oneData.StageName + " " + hour.ToString("00") + ":" + minute.ToString("00") + ":" + second.ToString("00") + " " + oneData.PlayerName
@@ -68,14 +70,11 @@ public class SceneList : MonoBehaviour {
                 ListModelClone = GameObject.Instantiate(ListTextModel, ViewContent.transform);
                 clonePos = ListModelClone.GetComponent<RectTransform>().anchoredPosition;
                 clonePos.y -= ListInterval * NoRow;
+                Debug.Log(clonePos);
                 ListModelClone.GetComponent<RectTransform>().anchoredPosition = clonePos;
+                ListModelClone.GetComponent<Text>().text = showText[i][j];
             }
         }
     }
 
-}
-
-public class DataInfo
-{
-    public static string PlayerListKey = "PlayerList";
 }

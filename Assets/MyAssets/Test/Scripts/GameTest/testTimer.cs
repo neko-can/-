@@ -42,7 +42,7 @@ public class testTimer : MonoBehaviour {
         hour = Math.Floor(minute / 60);
         second = elapsedTime % 60;
         elapsedTimeText = hour.ToString("00") + ":" + minute.ToString("00") + ":" + second.ToString("00");
-        timerTextObj.GetComponent<Text>().text = elapsedTimeText;
+        timerTextObj.GetComponent<TextMesh>().text = elapsedTimeText;
     }
     void TimerUpdate()
     {
@@ -53,7 +53,7 @@ public class testTimer : MonoBehaviour {
         hour = Math.Floor(minute / 60);
         second = elapsedTime % 60;
         elapsedTimeText = hour.ToString("00") + ":" + minute.ToString("00") + ":" + second.ToString("00");
-        timerTextObj.GetComponent<Text>().text = elapsedTimeText;
+        timerTextObj.GetComponent<TextMesh>().text = elapsedTimeText;
     }
 
 }

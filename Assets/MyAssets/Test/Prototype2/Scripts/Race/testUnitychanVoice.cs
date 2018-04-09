@@ -58,30 +58,36 @@ public static class UnitychanVoiceStatic
     }
     public static void OnLoad()
     {
-        VoiceIndex = Random.Range(0, jumpVoice.Length);
-        unitychanVoice.clip = OnLoadVoice[VoiceIndex];
-        unitychanVoice.loop = false;
-        unitychanVoice.Play();
+        VoiceIndex = Random.Range(0, OnLoadVoice.Length);
+        unitychanVoice.PlayOneShot(OnLoadVoice[VoiceIndex]);
+        //unitychanVoice.clip = OnLoadVoice[VoiceIndex];
+        //unitychanVoice.loop = false;
+        //unitychanVoice.Play();
     }
     public static void OnGoal()
     {
-        VoiceIndex = Random.Range(0, jumpVoice.Length);
-        unitychanVoice.clip = OnGoalVoice[VoiceIndex];
-        unitychanVoice.loop = false;
-        unitychanVoice.Play();
+        VoiceIndex = Random.Range(0, OnGoalVoice.Length);
+        unitychanVoice.PlayOneShot(OnGoalVoice[VoiceIndex]);
+        //unitychanVoice.clip = OnGoalVoice[VoiceIndex];
+        //unitychanVoice.loop = false;
+        //unitychanVoice.Play();
     }
     public static void Restart()
     {
-        VoiceIndex = Random.Range(0, jumpVoice.Length);
-        unitychanVoice.clip = RestartVoice[VoiceIndex];
-        unitychanVoice.loop = false;
-        unitychanVoice.Play();
+        VoiceIndex = Random.Range(0, RestartVoice.Length);
+        unitychanVoice.PlayOneShot(RestartVoice[VoiceIndex]);
+        //unitychanVoice.clip = RestartVoice[VoiceIndex];
+        //unitychanVoice.loop = false;
+        //unitychanVoice.Play();
     }
     public static void OnRunning()
     {
-        unitychanVoice.clip = RunningVoice;
-        unitychanVoice.loop = true;
-        unitychanVoice.Play();
+        if (!unitychanVoice.isPlaying)
+        {
+            unitychanVoice.clip = RunningVoice;
+            unitychanVoice.loop = true;
+            unitychanVoice.Play();
+        }
     }
 
 }

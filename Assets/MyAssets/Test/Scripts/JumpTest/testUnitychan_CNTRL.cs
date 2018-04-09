@@ -23,6 +23,7 @@ public class testUnitychan_CNTRL : MonoBehaviour {
     testRunPhase runPhase;
     //variable
     [HideInInspector] public GameObject unitychan;
+    [HideInInspector] public GameObject unitychanCenter;
     [HideInInspector] public Animator unitychan_Anim;
     [HideInInspector] public Rigidbody unitychanRb;
     [HideInInspector] public GameObject MainCamera;

@@ -24,5 +24,4 @@ public class testWallCollider : MonoBehaviour {
             unitychan_CNTRL.otherCollider = gameObject;
         }
     }
-
 }

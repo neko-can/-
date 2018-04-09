@@ -419,6 +419,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 4e154bf235e41704bbd6bbc6fd6c63f6, type: 2}
   - {fileID: 2100000, guid: 119ec07f1c7ed204db46bd8465fd5a50, type: 2}
   - {fileID: 2100000, guid: 5d133deeaa66ed445853e946ff25e073, type: 2}
+  - {fileID: 2100000, guid: e980bc7fbb00dc34b86b95ac842d1920, type: 2}
+  - {fileID: 2100000, guid: b8f20d5ca50d16143afc11f5e4af6fc1, type: 2}
+  - {fileID: 2100000, guid: a07fadb24ea940240afba3afc1a692cc, type: 2}
+  - {fileID: 2100000, guid: 5b21c6a8ce40f9641bd1204324b90b2c, type: 2}
+  - {fileID: 2100000, guid: 966766f4829d6ad419eaaf7cf0712f85, type: 2}
+  - {fileID: 2100000, guid: 19e2485c6f92d6944ad20466ac77b04c, type: 2}
+  - {fileID: 2100000, guid: b9be0c15efe8ad9489fdeead114d8ec5, type: 2}
   FadeImage: {fileID: 486950390}
   FadeColor: {r: 0, g: 0, b: 0, a: 0}
   countTextObj: {fileID: 446740078}

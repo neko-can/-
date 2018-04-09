@@ -26,11 +26,10 @@ public class testGameAdvance : MonoBehaviour {
     float transitionTime = 1f;
     MyFade myFade;
     bool IsToRecodeScene = false;
-    string recodeSceneName = "Recode";
-    string XRtoSceneName = "XRtoNotXR";
     float ClearTime;
     float outTimeElapsed = 0f;
     Scene nowActiveScene;
+    public static bool IsToTitle = false;
 
     public void MyStart()
     {
@@ -90,6 +89,17 @@ public class testGameAdvance : MonoBehaviour {
         {
             SceneTrans();
         }
+        //ToTitle
+        if (IsToTitle)
+        {
+            outTimeElapsed += Time.deltaTime;
+            myFade.MyFadeOut();
+            if (outTimeElapsed > transitionTime)
+            {
+                IsToTitle = false;
+                SceneManager.LoadScene(AllScenesInfoStatic.TitleSceneName);
+            }
+        }
     }
 
     void SceneTrans()
@@ -98,9 +108,11 @@ public class testGameAdvance : MonoBehaviour {
         myFade.MyFadeOut();
         if(outTimeElapsed > transitionTime)
         {
-            XRAdvance.NextSceneName = recodeSceneName;
-            SceneManager.LoadScene(XRtoSceneName);
+            XRAdvance.NextSceneName = AllScenesInfoStatic.RecodeSceneName;
+            SceneManager.LoadScene(AllScenesInfoStatic.XRtoNotXRSceneName);
         }
     }
+
+
 
 }

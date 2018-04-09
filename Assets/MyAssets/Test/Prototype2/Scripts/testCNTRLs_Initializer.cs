@@ -38,6 +38,9 @@ public class testCNTRLs_Initializer : MonoBehaviour {
         //script
         cntrls.unitychanVoice = GetComponent<testUnitychanVoice>();
         cntrls.unitychanVoice.MyStart();
+        //forSend
+        UnitychanInfo.unitychan = cntrls.unitychan;
+        UnitychanInfo.unitychanCenter = cntrls.unitychan.transform.Find("unitychan_center").gameObject;
     }
 
 }

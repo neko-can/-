@@ -19,7 +19,6 @@ public class testFloorCollider : MonoBehaviour {
     {
         if(collision.gameObject == unitychan)
         {
-            Debug.Log("check");
             unitychan_CNTRL.IsFloorHit = true;
             unitychan_CNTRL.otherCollider = gameObject;
         }

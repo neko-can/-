@@ -21,7 +21,7 @@ public class XRAdvance : MonoBehaviour {
     float transitionTime = 1f;
     float outElapsedTime;
     MyFade myFade;
-    [HideInInspector] public static string NextSceneName = "Title";
+    [HideInInspector] public static string NextSceneName = AllScenesInfoStatic.TitleSceneName;
     //カウントダウン
     float countTime = 10f;
     float elapsedTime;

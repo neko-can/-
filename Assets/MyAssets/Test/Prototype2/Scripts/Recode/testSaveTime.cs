@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using unityHelper;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class testSaveTime : MonoBehaviour {
 
     public GameObject PlayerNameTextObj;
     public GameObject ListTextModel;
     public GameObject ViewContent;
-    public Color FadeColor;
-    public Image FadeImage;
     Vector2 modelPos;
     GameObject listModelClone;
     string cloneText;
@@ -24,16 +20,9 @@ public class testSaveTime : MonoBehaviour {
     string PlayerListKey = "PlayerList";
     SaveTime saveTime;
     SavePlayerList savePlayerList;
-    //シーン遷移
-    MyFade myFade;
-    bool IsSaveClick = false;
-    bool IsCancelClick = false;
-    string titleSceneName = "Title";
-    float outTimeElapsed = 0f;
     //parameter
     [HideInInspector] public static int MaxListRange = 60;
     float ListInterval = 50f;
-    float transitionTime = 1f;
 
     public void MyStart()
     {
@@ -46,22 +35,10 @@ public class testSaveTime : MonoBehaviour {
         defaultName += savePlayerList.NoPlayer.ToString();
         //UI表示
         ShowData();
-        //シーン遷移
-        myFade = new MyFade(FadeImage, FadeColor, transitionTime);
     }
 
     public void MyUpdate()
     {
-        myFade.MyFadeIn();
-        if(IsSaveClick || IsCancelClick)
-        {
-            outTimeElapsed += Time.deltaTime;
-            myFade.MyFadeOut();
-            if(outTimeElapsed > transitionTime)
-            {
-                SceneManager.LoadScene(titleSceneName);
-            }
-        }
     }
 
     public void SaveOnClick()
@@ -98,9 +75,6 @@ public class testSaveTime : MonoBehaviour {
         SavePlayerList checkList = SaveData.GetClass<SavePlayerList>(PlayerListKey, new SavePlayerList());
         Debug.Log(checkData.PlayerName);
         Debug.Log(checkList.ListIndex);
-
-        //シーン遷移
-        IsSaveClick = true;
     }
 
 
@@ -136,7 +110,6 @@ public class testSaveTime : MonoBehaviour {
 
     public void CancelOnClick()
     {
-        IsCancelClick = true;
     }
 
 }

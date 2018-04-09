@@ -12,6 +12,7 @@ public class testJumpPhase : MonoBehaviour {
     //必要な変数
     Animator unitychan_Anim;
     GameObject unitychan;
+    GameObject unitychanCenter;
     Rigidbody unitychanRb;
     Vector3 unitychanVelocity;
     bool IsOnJump = true;
@@ -58,6 +59,7 @@ public class testJumpPhase : MonoBehaviour {
         Unitychan_CNTRL = GetComponent<testUnitychan_CNTRL>();
         unitychan_Anim = Unitychan_CNTRL.unitychan_Anim;
         unitychan = Unitychan_CNTRL.unitychan;
+        unitychanCenter = UnitychanInfo.unitychanCenter;
         unitychanRb = unitychan.GetComponent<Rigidbody>();
         unitychanCollider = Unitychan_CNTRL.unitychanCollider;
         ReleaseTrigger = Unitychan_CNTRL.ReleaseName;
@@ -156,15 +158,19 @@ public class testJumpPhase : MonoBehaviour {
         IsFloorHit = Unitychan_CNTRL.IsFloorHit;
         IsWallHit = Unitychan_CNTRL.IsWallHit;
         otherObject = Unitychan_CNTRL.otherCollider;
+        Debug.Log(otherObject);
+        Debug.Log(IsWallKick);
         if (IsWallKick)
         {
             if (IsFloorHit)
             {
-                //unitychan.transform.up = otherObject.transform.up;
+                Debug.Log("IsWallKick && IsFloorHit");
+                unitychan.transform.up = rayOtherObject.transform.forward;
+                unitychan_Anim.enabled = true;
             }
-            if (IsWallHit)
+            else if (IsWallHit)
             {
-                Debug.Log(rayOtherObject.transform.forward);
+                Debug.Log("IsWallKick && IsWallHit");
                 unitychan.transform.up = rayOtherObject.transform.forward;
                 unitychan_Anim.enabled = true;
             }
@@ -173,6 +179,7 @@ public class testJumpPhase : MonoBehaviour {
         {
             if (IsFloorHit)
             {
+                Debug.Log("Only IsFloorHit");
                 if (unitychan_Anim.enabled == false)
                 {
                     unitychan_Anim.enabled = true;
@@ -209,7 +216,7 @@ public class testJumpPhase : MonoBehaviour {
         IsWallKick = false;
         IsEndWallKick = false;
         rayOtherObject = null;
-        rayStartPos = unitychan.transform.position;
+        rayStartPos = unitychanCenter.transform.position;
         rayPos = rayStartPos;
         rayPos += AddVelocity * wallKickMaxTime;
         //rayPos.y += 0.5f * Physics.gravity.y * Mathf.Pow(rayStopNormTime * jumpFullTime, 2);

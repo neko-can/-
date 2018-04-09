@@ -12,14 +12,23 @@ EditorBuildSettings:
     path: Assets/MyAssets/Test/Prototype2/Scenes/Level1.unity
     guid: 46be7f1037b9d4c4abcb8065f3bcd765
   - enabled: 1
+    path: Assets/MyAssets/Test/Prototype2/Scenes/Level2.unity
+    guid: 48607312bf6dedf4c988c802ae3724b2
+  - enabled: 1
+    path: Assets/MyAssets/Test/Prototype2/Scenes/Level3.unity
+    guid: 6641f521bbeeae149b0dbb70cf1f7aa2
+  - enabled: 1
     path: Assets/MyAssets/Test/Prototype2/Scenes/Manual.unity
     guid: 9b336324fc2a34345a72cb9ca5597019
   - enabled: 1
-    path: Assets/MyAssets/Test/Prototype2/Scenes/Recode.unity
-    guid: ae18200116b0dd04cac6429c75bc3350
+    path: Assets/MyAssets/Test/Prototype2/Scenes/RecodeList.unity
+    guid: f538457240f2a4449813e95caac6f306
   - enabled: 1
     path: Assets/MyAssets/Test/Prototype2/Scenes/SelectScene.unity
     guid: f7bda8d8a0ad9f94c87b094e86273236
   - enabled: 1
     path: Assets/MyAssets/Test/Prototype2/Scenes/XRtoNotXR.unity
     guid: dbb529333f3c63e4e8040a05ee67000f
+  - enabled: 1
+    path: Assets/MyAssets/Test/Prototype2/Scenes/Recode.unity
+    guid: ae18200116b0dd04cac6429c75bc3350
